@@ -1,29 +1,44 @@
-# An Tiếng Gáy Trong Đêm — bản chơi thử đầu tiên
+# An — Tiếng Gáy Trong Đêm
 
-Vertical slice Godot 4 cho bốn nhịp mở đầu: hành lang và lá thư, lời dẫn trong lớp học, chạy trốn trong nhà vệ sinh, rồi chiếc gương và bóng ma. Hình ảnh là hình học/đồ họa vẽ trực tiếp bằng GDScript; không dùng hình hay âm thanh bên ngoài.
+Game kinh dị học đường Việt Nam, viết bằng GDScript cho Godot 4.7.2. Đêm thứ nhất có 15 cảnh tương tác, sáu kỷ vật, các câu đố, stealth/chase, thử thách cờ vua, lựa chọn có hệ quả, hai kết thúc và cờ mở khóa Đêm thứ hai.
 
-## Chạy
+## Chạy từ mã nguồn
 
-Mở thư mục này bằng Godot 4.x hoặc chạy:
+Mở thư mục dự án bằng Godot 4.x hoặc chạy:
 
 ```sh
-godot --path . --editor
+godot --path .
 ```
 
-Nhấn **F6/F5** trong editor hoặc chạy scene chính `scenes/01_hanh_lang.tscn`.
+Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đã lưu nếu có. Save JSON được đặt trong `user://an_tieng_gay_trong_dem_save.json`.
+
+## Bản chạy Linux
+
+`tools/build_linux.sh` tạo bản Linux tự chứa trong `builds/` bằng cách ghép runtime Godot đang cài với PCK của game. Bản hiện tại đã được smoke-test ở chế độ headless. Đây là phương án đóng gói không dùng export template; export preset Godot thông thường cần bộ template tương ứng. Windows preset đã có nhưng chưa export được vì máy chưa có Godot 4.7.2 Windows templates.
 
 ## Điều khiển
 
-- **WASD** hoặc **phím mũi tên** — di chuyển.
-- **E** — đọc/tiếp tục/tương tác.
+- **WASD / phím mũi tên** — di chuyển hoặc điều hướng ô.
+- **E / Enter** — tương tác, chọn hoặc xác nhận.
+- **F** — tạo tiếng động đánh lạc hướng bảo vệ trong cảnh tuần tra.
+- **Space** — nấp khi đang ở vùng che khuất.
+- **R** — chơi lại/xếp lại câu đố hiện tại.
+- **H** — gợi ý mạch điện sau vài lần thử.
+- **A / B** — chọn cách xử lý bài đăng ở cảnh 10.
+- **X** — xin dừng thử thách cờ vua; E rời bàn hoặc R chơi lại.
 - **Esc** — thoát.
 
-Lá thư có vùng tương tác gần tờ giấy giữa hành lang. Ở sự kiện nhà vệ sinh, chạy vào buồng cuối (vùng sáng nhạt bên phải) và nhấn **E** trước khi hết 3 giây. Nếu không kịp, màn hình **YOU DIED** cho phép thử lại.
+## Nội dung
 
-## Việt hóa phông chữ
+Các scene 01–04 mở đầu bằng lá thư, lớp học, thử thách trốn trong ba giây và chiếc gương. Scenes 05–08 điều tra bảng tin, tủ A-17, nhật ký sáu mảnh, mạch điện 4×4, bảo vệ tuần tra và cuộc truy đuổi. Scenes 09–11 giải mã máy tính, khôi phục camera, cân nhắc lời đồn và ghép chứng cứ. Scenes 12–15 trả lại sáu kỷ vật, đấu một thế cờ chiếu hết hợp lệ, đối diện buổi sáng và mở một trong hai kết thúc.
 
-Văn bản lưu UTF-8 và dùng phông chữ fallback của Godot để tránh phụ thuộc asset ngoài. Cần kiểm tra glyph tiếng Việt trên từng hệ điều hành; để đóng gói ổn định, có thể thêm một phông sans hỗ trợ tiếng Việt với giấy phép OFL (ví dụ Noto Sans), lưu tại `assets/fonts/`, rồi gán làm theme font mặc định trong project. Không có font hay asset bên thứ ba nào được sao chép vào dự án.
+GameState lưu inventory, flags, chứng cứ, lựa chọn và checkpoint. Luật cờ vua thuần GDScript, không dùng engine bên ngoài. Audio ambience và SFX được tổng hợp riêng cho dự án; hình ảnh môi trường/nhân vật được vẽ bằng mã nguồn. Không có tài nguyên bên thứ ba trong bản hiện tại.
 
-## Giới hạn bản slice
+## Kiểm tra
 
-Đây là bản dựng câu chuyện tương tác tối giản: chưa có âm thanh, hoạt ảnh, lưu game, hoặc các chương sau. Nhịp cốt truyện và lời thoại là văn bản nguyên bản cho slice này; cần đối chiếu với bản kịch bản 15 cảnh đầy đủ nếu có bản chi tiết bên ngoài repo.
+```sh
+godot --headless --path . --editor --quit
+godot --headless --path . --quit-after 3
+```
+
+Các harness trong `tests/` có thể chạy bằng `godot --headless --path . --script tests/<test>.gd`. Xem `docs/PROGRESS.md` và `docs/TASK_BOARD.md` để biết bằng chứng mới nhất và phần còn chưa xác minh.

@@ -2,6 +2,10 @@
 ; First playable vertical slice: An Tiếng Gáy Trong Đêm.
 config_version=5
 
+[autoload]
+AudioDirector="*res://scripts/core/audio_director.gd"
+GameState="*res://scripts/core/game_state.gd"
+
 [application]
 config/name="An Tiếng Gáy Trong Đêm"
 run/main_scene="res://scenes/01_hanh_lang.tscn"

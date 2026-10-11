@@ -21,9 +21,47 @@ var panel: PanelContainer
 var retry_button: Button
 
 func _ready() -> void:
+	AudioDirector.set_ambience("school_night")
 	_setup_input()
 	_build_ui()
+	_restore_checkpoint()
 	_show_beat()
+	if GameState.scene_id in ["scene_05", "scene_06", "scene_07", "scene_08"]:
+		call_deferred("_resume_scene", "res://scenes/05_bang_tin.tscn")
+	elif GameState.scene_id in ["scene_09", "scene_10", "scene_11"]:
+		call_deferred("_resume_scene", "res://scenes/09_phong_tin_hoc.tscn")
+	elif GameState.scene_id in ["scene_12", "scene_13", "scene_14", "scene_15"]:
+		call_deferred("_resume_scene", "res://scenes/%s" % {
+			"scene_12": "12_phong_cau_vua.tscn",
+			"scene_13": "13_ban_co_boss.tscn",
+			"scene_14": "14_binh_minh.tscn",
+			"scene_15": "15_ending.tscn",
+	}[GameState.scene_id])
+
+func _restore_checkpoint() -> void:
+	match GameState.scene_id:
+		"scene_01":
+			beat = Beat.HALLWAY
+			GameState.set_checkpoint("scene_01", "hallway_letter")
+		"scene_02":
+			beat = Beat.CLASSROOM
+			letter_found = true
+			player = Vector2(480, 405)
+		"scene_03":
+			beat = Beat.TOILET
+			letter_found = true
+			player = Vector2(360, 372)
+			is_hidden = false
+			hide_time = HIDE_SECONDS
+		"scene_04":
+			beat = Beat.MIRROR
+			letter_found = true
+			player = Vector2(480, 405)
+		_:
+			beat = Beat.HALLWAY
+
+func _resume_scene(path: String) -> void:
+	get_tree().change_scene_to_file(path)
 
 func _setup_input() -> void:
 	var bindings := {
@@ -56,6 +94,8 @@ func _process(delta: float) -> void:
 			objective.text = "NÚP! Còn %.1f giây  ·  Buồng cuối phát sáng bên phải" % maxf(hide_time, 0.0)
 			if hide_time <= 0.0:
 				beat = Beat.DEAD
+				AudioDirector.play_sfx("death_hit")
+				GameState.set_checkpoint("scene_03", "toilet_retry")
 				_show_beat()
 		queue_redraw()
 	elif beat == Beat.MIRROR:
@@ -80,29 +120,41 @@ func _interact() -> void:
 		Beat.HALLWAY:
 			if not letter_found and player.distance_to(Vector2(492, 291)) < 105.0:
 				letter_found = true
+				GameState.set_evidence("mysterious_letter", "read")
+				AudioDirector.play_sfx("letter")
+				GameState.set_flag("letter_read")
 				beat = Beat.LETTER
 				_show_beat()
 		Beat.LETTER:
 			beat = Beat.CLASSROOM
+			GameState.set_checkpoint("scene_02", "classroom_letters")
 			_show_beat()
 		Beat.CLASSROOM:
 			player = Vector2(360, 372)
 			beat = Beat.TOILET
 			is_hidden = false
 			hide_time = HIDE_SECONDS
+			GameState.set_checkpoint("scene_03", "toilet_hide")
 			_show_beat()
 		Beat.TOILET:
 			if HIDE_SPOT.has_point(player):
 				is_hidden = true
 				beat = Beat.MIRROR
+				GameState.set_flag("survived_toilet_event")
+				GameState.set_checkpoint("scene_04", "mirror")
 				_show_beat()
 		Beat.MIRROR:
 			if MIRROR_RECT.grow(50).has_point(player):
 				beat = Beat.REFLECTION
+				AudioDirector.play_sfx("mirror_sting")
 				_show_beat()
 		Beat.REFLECTION:
 			beat = Beat.GHOST
 			_show_beat()
+		Beat.GHOST:
+			GameState.set_checkpoint("scene_05", "notice_board")
+			GameState.save_game()
+			get_tree().change_scene_to_file("res://scenes/05_bang_tin.tscn")
 		Beat.DEAD:
 			_retry()
 
@@ -210,11 +262,12 @@ func _show_beat() -> void:
 	queue_redraw()
 
 func _retry() -> void:
-	beat = Beat.HALLWAY
-	player = Vector2(480, 405)
-	letter_found = false
+	beat = Beat.TOILET
+	player = Vector2(360, 372)
+	letter_found = true
 	is_hidden = false
 	hide_time = HIDE_SECONDS
+	GameState.set_checkpoint("scene_03", "toilet_retry")
 	_show_beat()
 
 func _draw() -> void:
