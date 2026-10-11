@@ -14,7 +14,7 @@ Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đ�
 
 ## Bản chạy Linux
 
-`tools/build_linux.sh` tạo bản Linux tự chứa trong `builds/` bằng cách ghép runtime Godot đang cài với PCK của game. Bản hiện tại đã được smoke-test ở chế độ headless. Đây là phương án đóng gói không dùng export template; export preset Godot thông thường cần bộ template tương ứng. Windows preset đã có nhưng chưa export được vì máy chưa có Godot 4.7.2 Windows templates.
+`tools/build_linux.sh` tạo bản Linux tự chứa trong `builds/` bằng cách ghép runtime Godot đang cài với PCK của game. Hai preset Linux và Windows trong `export_presets.cfg` cũng đã xuất thành công bằng template Godot 4.7.2 đã xác minh SHA-512. Bản Linux template đã smoke-test headless; file Windows `.exe` đã xác nhận định dạng PE32+ x86_64 nhưng chưa chạy thử trên Windows. Template, archive và build artifacts được giữ trong `builds/` (bị Git ignore).
 
 ## Điều khiển
 
