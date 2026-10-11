@@ -1,6 +1,6 @@
 # An — Tiếng Gáy Trong Đêm
 
-Game kinh dị học đường Việt Nam, viết bằng GDScript cho Godot 4.7.2. Đêm thứ nhất có 15 cảnh tương tác, sáu kỷ vật, các câu đố, stealth/chase, thử thách cờ vua, lựa chọn có hệ quả, hai kết thúc và cờ mở khóa Đêm thứ hai.
+Game kinh dị học đường Việt Nam, viết bằng GDScript cho Godot 4.7.2. Đêm thứ nhất có 15 cảnh tương tác, sáu kỷ vật, các câu đố, stealth/chase, thử thách cờ vua, lựa chọn có hệ quả, hai kết thúc và cờ mở khóa Đêm thứ hai. Trạng thái hiện tại là **HUMAN_PLAYTEST_REQUIRED**, chưa phải RELEASE_READY.
 
 ## Chạy từ mã nguồn
 
@@ -14,7 +14,7 @@ Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đ�
 
 ## Bản chạy Linux
 
-`tools/build_linux.sh` tạo bản Linux tự chứa trong `builds/` bằng cách ghép runtime Godot đang cài với PCK của game. Hai preset Linux và Windows trong `export_presets.cfg` cũng đã xuất thành công bằng template Godot 4.7.2 đã xác minh SHA-512. Bản Linux template đã smoke-test headless; file Windows `.exe` đã xác nhận định dạng PE32+ x86_64 nhưng chưa chạy thử trên Windows. Template, archive và build artifacts được giữ trong `builds/` (bị Git ignore).
+`tools/build_linux.sh` tạo bản Linux trong `builds/` bằng template release Godot 4.7.2 và một PCK đặt cạnh executable; cần giữ hai file cùng thư mục. Hai preset Linux và Windows trong `export_presets.cfg` cũng đã xuất thành công bằng template Godot 4.7.2 đã xác minh SHA-512. Cặp Linux mới đã smoke-test headless với save QA riêng; full GUI playthrough chưa xác minh. File Windows `.exe` đã xác nhận định dạng PE32+ x86_64 nhưng chưa chạy thử trên Windows. Template, archive và build artifacts được giữ trong `builds/` (bị Git ignore).
 
 ## Điều khiển
 
@@ -41,4 +41,4 @@ godot --headless --path . --editor --quit
 godot --headless --path . --quit-after 3
 ```
 
-Các harness trong `tests/` có thể chạy bằng `godot --headless --path . --script tests/<test>.gd`. Xem `docs/PROGRESS.md` và `docs/TASK_BOARD.md` để biết bằng chứng mới nhất và phần còn chưa xác minh.
+Các harness trong `tests/` có thể chạy bằng `godot --headless --path . --script tests/<test>.gd`. Xem `docs/PROGRESS.md` và `docs/TASK_BOARD.md` để biết bằng chứng mới nhất và phần còn chưa xác minh. Báo cáo [Release QA](docs/RELEASE_QA.md) và [hướng dẫn playtest thủ công 15 cảnh](docs/PLAYTEST_HANDOFF.md) ghi profile save riêng, checklist, cách chụp ảnh và mẫu bug report.
