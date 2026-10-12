@@ -1,16 +1,26 @@
 ; Engine configuration file.
-; First playable vertical slice: An Tiếng Gáy Trong Đêm.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
+[application]
+
+config/name="An Tiếng Gáy Trong Đêm"
+run/main_scene="res://scenes/01_hanh_lang.tscn"
+config/features=PackedStringArray("4.7")
+
 [autoload]
+
 AudioDirector="*res://scripts/core/audio_director.gd"
 GameState="*res://scripts/core/game_state.gd"
 
-[application]
-config/name="An Tiếng Gáy Trong Đêm"
-run/main_scene="res://scenes/01_hanh_lang.tscn"
-
 [display]
+
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/size/window_width_override=1280
@@ -18,7 +28,7 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 
 [rendering]
+
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-textures/default_filters/use_nearest_mipmap_filter=false
 environment/defaults/default_clear_color=Color(0.025, 0.027, 0.04, 1)

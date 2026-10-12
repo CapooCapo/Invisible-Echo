@@ -1,10 +1,11 @@
 extends Node2D
 
-## First playable slice: narrative beats 01–04.
+## First playable slice: narrative beats 01–04, played in physical 3D rooms.
 const VIEW := Vector2(960, 540)
 const PLAYER_SPEED := 205.0
 const HIDE_SECONDS := 3.0
-const HIDE_SPOT := Rect2(700, 286, 198, 170)
+const HIDE_STAGING_SECONDS := 1.4
+const HIDE_SPOT := Rect2(80, 286, 210, 170)
 const MIRROR_RECT := Rect2(790, 128, 96, 165)
 
 enum Beat { HALLWAY, LETTER, CLASSROOM, TOILET, DEAD, MIRROR, REFLECTION, GHOST }
@@ -13,16 +14,25 @@ var player := Vector2(480, 405)
 var letter_found := false
 var is_hidden := false
 var hide_time := HIDE_SECONDS
+var hide_staging_remaining := 0.0
+var letter_reveal_remaining := 0.0
 var message: Label
 var prompt: Label
 var objective: Label
 var overlay: ColorRect
 var panel: PanelContainer
 var retry_button: Button
+var hallway_visual: SubViewportContainer
+var restroom_visual: SubViewportContainer
+var active_room := ""
+var last_projected_player := Vector2.INF
+var classroom_read := false
 
 func _ready() -> void:
 	AudioDirector.set_ambience("school_night")
 	_setup_input()
+	_build_hallway_visual()
+	_build_restroom_visual()
 	_build_ui()
 	_restore_checkpoint()
 	_show_beat()
@@ -50,7 +60,7 @@ func _restore_checkpoint() -> void:
 		"scene_03":
 			beat = Beat.TOILET
 			letter_found = true
-			player = Vector2(360, 372)
+			player = Vector2(360, 417)
 			is_hidden = false
 			hide_time = HIDE_SECONDS
 		"scene_04":
@@ -69,82 +79,116 @@ func _setup_input() -> void:
 		"move_right": [KEY_D, KEY_RIGHT],
 		"move_up": [KEY_W, KEY_UP],
 		"move_down": [KEY_S, KEY_DOWN],
+		"run": [KEY_SHIFT],
 	}
 	for action in bindings:
-		InputMap.add_action(action)
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
 		for keycode in bindings[action]:
 			var key := InputEventKey.new()
 			key.keycode = keycode
 			InputMap.action_add_event(action, key)
 
 func _process(delta: float) -> void:
-	if beat == Beat.HALLWAY:
-		var move := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		player += move * PLAYER_SPEED * delta
-		player.x = clampf(player.x, 90.0, 870.0)
-		player.y = clampf(player.y, 104.0, 455.0)
-		queue_redraw()
-	elif beat == Beat.TOILET:
-		if not is_hidden:
-			var move := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-			player += move * PLAYER_SPEED * delta
-			player.x = clampf(player.x, 90.0, 870.0)
-			player.y = clampf(player.y, 130.0, 460.0)
-			hide_time -= delta
-			objective.text = "NÚP! Còn %.1f giây  ·  Buồng cuối phát sáng bên phải" % maxf(hide_time, 0.0)
-			if hide_time <= 0.0:
-				beat = Beat.DEAD
-				AudioDirector.play_sfx("death_hit")
-				GameState.set_checkpoint("scene_03", "toilet_retry")
-				_show_beat()
-		queue_redraw()
-	elif beat == Beat.MIRROR:
-		var move := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		player += move * PLAYER_SPEED * delta
-		player.x = clampf(player.x, 90.0, 870.0)
-		player.y = clampf(player.y, 104.0, 455.0)
-		queue_redraw()
+	# Compatibility projection is never the movement authority. Explicit
+	# assignments (checkpoint restore and older harnesses) are one-way warps.
+	_sync_external_player()
+	if active_room == "hallway" and hallway_visual != null:
+		player = hallway_visual.call("get_projected_position") as Vector2
+	elif active_room == "restroom" and restroom_visual != null:
+		player = restroom_visual.call("get_projected_position") as Vector2
+	last_projected_player = player
+	if beat == Beat.CLASSROOM and classroom_read and hallway_visual.get("restroom_door_open"):
+		var hallway_position: Vector3 = hallway_visual.call("get_player_position")
+		if hallway_position.z < -13.55:
+			_enter_restroom()
+	if beat == Beat.TOILET and not is_hidden:
+		hide_time -= delta
+		objective.text = "NÚP! Còn %.1f giây  ·  Buồng phát sáng bên trái" % maxf(hide_time, 0.0)
+		if hide_time <= 0.0:
+			beat = Beat.DEAD
+			AudioDirector.play_sfx("death_hit")
+			GameState.set_checkpoint("scene_03", "toilet_retry")
+			_show_beat()
+	elif beat == Beat.TOILET and is_hidden:
+		hide_staging_remaining -= delta
+		if hide_staging_remaining <= 0.0:
+			is_hidden = false
+			beat = Beat.MIRROR
+			_show_beat()
+	if beat == Beat.LETTER and letter_reveal_remaining > 0.0:
+		letter_reveal_remaining = maxf(letter_reveal_remaining - delta, 0.0)
+		if letter_reveal_remaining == 0.0:
+			_show_beat()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if active_room == "hallway":
+			hallway_visual.call("orbit_mouse", event.relative)
+		elif active_room == "restroom":
+			restroom_visual.call("orbit_mouse", event.relative)
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE and beat != Beat.DEAD:
-			get_tree().quit()
+		if event.keycode == KEY_ESCAPE:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		elif event.keycode == KEY_E:
 			_interact()
+		elif event.keycode == KEY_F and beat in [Beat.HALLWAY, Beat.CLASSROOM, Beat.TOILET, Beat.MIRROR]:
+			if active_room == "hallway":
+				hallway_visual.call("toggle_flashlight")
+			elif active_room == "restroom":
+				restroom_visual.call("toggle_flashlight")
 	elif event is InputEventMouseButton and event.pressed and beat == Beat.DEAD:
 		if retry_button.get_global_rect().has_point(event.position):
 			_retry()
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not panel.visible:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _interact() -> void:
+	_sync_external_player()
+	if beat == Beat.TOILET and is_hidden:
+		return
+	if beat != Beat.DEAD and active_room == "hallway" and hallway_visual.call("is_interacting"):
+		return
+	if beat != Beat.DEAD and active_room == "restroom" and restroom_visual.call("is_interacting"):
+		return
 	match beat:
 		Beat.HALLWAY:
-			if not letter_found and player.distance_to(Vector2(492, 291)) < 105.0:
+			if not letter_found and hallway_visual.call("near_letter"):
+				hallway_visual.call("play_interaction")
+				hallway_visual.call("play_letter_reveal")
 				letter_found = true
 				GameState.set_evidence("mysterious_letter", "read")
 				AudioDirector.play_sfx("letter")
 				GameState.set_flag("letter_read")
+				letter_reveal_remaining = 0.65
 				beat = Beat.LETTER
 				_show_beat()
 		Beat.LETTER:
 			beat = Beat.CLASSROOM
+			classroom_read = false
 			GameState.set_checkpoint("scene_02", "classroom_letters")
 			_show_beat()
 		Beat.CLASSROOM:
-			player = Vector2(360, 372)
-			beat = Beat.TOILET
-			is_hidden = false
-			hide_time = HIDE_SECONDS
-			GameState.set_checkpoint("scene_03", "toilet_hide")
-			_show_beat()
+			if not classroom_read:
+				classroom_read = true
+				_show_beat()
+			elif hallway_visual.call("near_restroom_door"):
+				hallway_visual.call("play_interaction")
+				hallway_visual.call("open_restroom_door")
+				objective.text = "Cửa đã mở · bước qua ngưỡng cửa"
 		Beat.TOILET:
-			if HIDE_SPOT.has_point(player):
+			if restroom_visual.call("near_stall_door") and not restroom_visual.get("stall_door_open"):
+				restroom_visual.call("play_interaction")
+				restroom_visual.call("open_hide_stall")
+			elif restroom_visual.call("inside_hide_stall"):
 				is_hidden = true
-				beat = Beat.MIRROR
+				hide_staging_remaining = HIDE_STAGING_SECONDS
 				GameState.set_flag("survived_toilet_event")
 				GameState.set_checkpoint("scene_04", "mirror")
 				_show_beat()
 		Beat.MIRROR:
-			if MIRROR_RECT.grow(50).has_point(player):
+			if restroom_visual.call("near_mirror"):
+				restroom_visual.call("play_interaction")
 				beat = Beat.REFLECTION
 				AudioDirector.play_sfx("mirror_sting")
 				_show_beat()
@@ -157,6 +201,15 @@ func _interact() -> void:
 			get_tree().change_scene_to_file("res://scenes/05_bang_tin.tscn")
 		Beat.DEAD:
 			_retry()
+
+
+func _enter_restroom() -> void:
+	player = Vector2(360, 417)
+	beat = Beat.TOILET
+	is_hidden = false
+	hide_time = HIDE_SECONDS
+	GameState.set_checkpoint("scene_03", "toilet_hide")
+	_show_beat()
 
 func _build_ui() -> void:
 	var layer := CanvasLayer.new()
@@ -215,6 +268,58 @@ func _build_ui() -> void:
 	retry_button.pressed.connect(_retry)
 	layer.add_child(retry_button)
 
+func _build_hallway_visual() -> void:
+	hallway_visual = load("res://scenes/visual/hallway_3d.tscn").instantiate() as SubViewportContainer
+	add_child(hallway_visual)
+
+func _build_restroom_visual() -> void:
+	restroom_visual = load("res://scenes/visual/restroom_3d.tscn").instantiate() as SubViewportContainer
+	add_child(restroom_visual)
+
+
+func _sync_external_player() -> void:
+	if player == last_projected_player:
+		return
+	if active_room == "hallway" and hallway_visual != null:
+		hallway_visual.call("set_player_from_prototype", player)
+	elif active_room == "restroom" and restroom_visual != null:
+		restroom_visual.call("set_state_from_prototype", player, int(beat), is_hidden)
+	last_projected_player = player
+
+func _sync_hallway_visual() -> void:
+	if hallway_visual == null:
+		return
+	hallway_visual.visible = beat in [Beat.HALLWAY, Beat.LETTER, Beat.CLASSROOM]
+	var hall_view := hallway_visual.get_node_or_null("SpatialViewport") as SubViewport
+	if hall_view != null:
+		hall_view.render_target_update_mode = SubViewport.UPDATE_ALWAYS if hallway_visual.visible else SubViewport.UPDATE_DISABLED
+	if hallway_visual.visible:
+		if active_room != "hallway":
+			active_room = "hallway"
+			last_projected_player = Vector2.INF
+		_sync_external_player()
+		if beat == Beat.CLASSROOM and letter_found:
+			hallway_visual.call("restore_letter_reveal")
+		hallway_visual.call("set_letter_visible", not letter_found)
+		hallway_visual.call("set_controls_enabled", beat == Beat.HALLWAY or (beat == Beat.CLASSROOM and classroom_read))
+
+func _sync_restroom_visual() -> void:
+	if restroom_visual == null:
+		return
+	restroom_visual.visible = beat in [Beat.TOILET, Beat.DEAD, Beat.MIRROR, Beat.REFLECTION, Beat.GHOST]
+	var room_view := restroom_visual.get_node_or_null("RestroomViewport") as SubViewport
+	var mirror_view := restroom_visual.get_node_or_null("RestroomViewport/SchoolRestroom/MirrorOnly3DRender") as SubViewport
+	for view in [room_view, mirror_view]:
+		if view != null:
+			view.render_target_update_mode = SubViewport.UPDATE_ALWAYS if restroom_visual.visible else SubViewport.UPDATE_DISABLED
+	if restroom_visual.visible:
+		if active_room != "restroom":
+			active_room = "restroom"
+			last_projected_player = Vector2.INF
+		_sync_external_player()
+		restroom_visual.call("update_story_state", int(beat), is_hidden)
+		restroom_visual.call("set_controls_enabled", beat in [Beat.TOILET, Beat.MIRROR])
+
 func _panel_style() -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.045, 0.047, 0.061, 0.96)
@@ -228,31 +333,37 @@ func _panel_style() -> StyleBoxFlat:
 	return style
 
 func _show_beat() -> void:
-	var has_panel := beat in [Beat.LETTER, Beat.CLASSROOM, Beat.DEAD]
+	_sync_hallway_visual()
+	_sync_restroom_visual()
+	var has_panel := beat == Beat.DEAD or (beat == Beat.LETTER and letter_reveal_remaining == 0.0) or (beat == Beat.CLASSROOM and not classroom_read)
 	panel.visible = has_panel
 	overlay.visible = beat == Beat.DEAD
 	retry_button.visible = beat == Beat.DEAD
-	objective.visible = beat in [Beat.HALLWAY, Beat.TOILET, Beat.MIRROR, Beat.REFLECTION, Beat.GHOST]
+	if has_panel:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	objective.visible = beat in [Beat.HALLWAY, Beat.CLASSROOM, Beat.TOILET, Beat.MIRROR, Beat.REFLECTION, Beat.GHOST] or (beat == Beat.LETTER and letter_reveal_remaining > 0.0)
 	match beat:
 		Beat.HALLWAY:
 			objective.text = "MỤC TIÊU  ·  Tìm lá thư rơi giữa hành lang"
-			prompt.text = "WASD / phím mũi tên: di chuyển     ·     E: tương tác"
+			prompt.text = "WASD: đi  ·  Shift: chạy  ·  Chuột: nhìn  ·  F: đèn pin  ·  E: tương tác"
 			message.text = ""
 		Beat.LETTER:
+			objective.text = "Hoàng nhặt lá thư lên..."
 			message.text = "01 — LÁ THƯ BÍ ẨN · 17:10\n\nTrong phong bì có một lá thư viết vội. Mực đã nhòe, nhưng dòng cuối vẫn đọc được: “Cứu tôi.” Trên giấy còn hằn ba vết móng tay.\n\nTừ tầng trên vọng xuống một tiếng gõ cửa. Hành lang vẫn trống không."
 			prompt.text = "Nhấn E để gấp thư lại"
 		Beat.CLASSROOM:
 			message.text = "02 — CỨU TÔI · 07:15\n\nSáng hôm sau, trong lớp học, bốn lá thư giống hệt nhau nằm trên bàn trực. Nét chữ run rẩy lặp lại cùng một lời cầu cứu. Mặt sau lá cuối ghi: “23:00 — nhà vệ sinh cuối hành lang.”\n\nNgoài cửa lớp vang lên tiếng gõ. Hành lang tối sầm; tiếng trống báo hiệu đêm thứ nhất bắt đầu."
-			prompt.text = "Nhấn E để tới hành lang nhà vệ sinh"
+			objective.text = "Đến cánh cửa cuối hành lang rồi nhấn E" if classroom_read else "02 · Đọc bốn lá thư"
+			prompt.text = "Nhấn E để rời trang thư" if not classroom_read else "WASD + chuột tới cửa cuối hành lang · E mở cửa"
 		Beat.TOILET:
-			objective.text = "NÚP! Còn %.1f giây  ·  Buồng cuối phát sáng bên phải" % maxf(hide_time, 0.0)
-			prompt.text = "Chạy vào vùng sáng và nhấn E để trốn  ·  WASD / phím mũi tên"
+			objective.text = "Đã nấp · tiếng bước chân đi qua ngoài cửa" if is_hidden else "NÚP! Còn %.1f giây  ·  Buồng phát sáng bên trái" % maxf(hide_time, 0.0)
+			prompt.text = "Giữ yên trong buồng..." if is_hidden else "E mở cửa buồng đầu bên trái · Chạy vào trong · E trốn"
 		Beat.DEAD:
 			message.text = "YOU DIED\n\nTiếng gõ dừng ngay sau lưng bạn. Cánh cửa buồng tự mở."
 			prompt.text = "Bạn đã không kịp trốn."
 		Beat.MIRROR:
 			objective.text = "MỤC TIÊU  ·  Tiến đến chiếc gương cuối phòng"
-			prompt.text = "Nhấn E khi đứng trước gương"
+			prompt.text = "WASD tới gương · E khi đứng gần gương"
 		Beat.REFLECTION:
 			objective.text = "Trong gương, cô gái đứng sau An. Nhấn E để ngoảnh lại."
 			prompt.text = "Nhấn E để ngoảnh lại"
@@ -263,14 +374,21 @@ func _show_beat() -> void:
 
 func _retry() -> void:
 	beat = Beat.TOILET
-	player = Vector2(360, 372)
+	player = Vector2(360, 417)
 	letter_found = true
 	is_hidden = false
 	hide_time = HIDE_SECONDS
+	hide_staging_remaining = 0.0
+	if restroom_visual != null:
+		restroom_visual.call("reset_hide_stall")
 	GameState.set_checkpoint("scene_03", "toilet_retry")
 	_show_beat()
 
 func _draw() -> void:
+	if beat in [Beat.HALLWAY, Beat.LETTER, Beat.CLASSROOM] and hallway_visual != null:
+		return
+	if beat in [Beat.TOILET, Beat.DEAD, Beat.MIRROR, Beat.REFLECTION, Beat.GHOST] and restroom_visual != null:
+		return
 	if beat in [Beat.HALLWAY, Beat.LETTER, Beat.CLASSROOM]:
 		_draw_hallway()
 	elif beat == Beat.TOILET or beat == Beat.DEAD:

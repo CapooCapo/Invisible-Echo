@@ -37,10 +37,20 @@ func _run() -> void:
 	_press_key(KEY_E)
 	_check(game.beat == game.Beat.LETTER and game.letter_found, "letter interaction opens letter")
 	_check(game.message.text.contains("Cứu tôi"), "letter content includes Vietnamese story text")
+	await create_timer(0.72).timeout
 	_press_key(KEY_E)
 	_check(game.beat == game.Beat.CLASSROOM, "letter advances to classroom")
 	_press_key(KEY_E)
-	_check(game.beat == game.Beat.TOILET, "classroom advances to timed toilet scene")
+	var hallway_actor := game.hallway_visual.get("actor") as CharacterBody3D
+	hallway_actor.call("teleport_to", Vector3(0, 0, -12.45))
+	await process_frame
+	_press_key(KEY_E)
+	_check(bool(game.hallway_visual.get("restroom_door_open")), "classroom leads to an interactive restroom door")
+	await create_timer(0.7).timeout
+	Input.action_press("move_up")
+	await create_timer(0.5).timeout
+	Input.action_release("move_up")
+	_check(game.beat == game.Beat.TOILET, "crossing the door starts the timed toilet scene")
 
 	await create_timer(3.15).timeout
 	_check(game.beat == game.Beat.DEAD, "missed three-second timer reaches YOU DIED")
@@ -48,19 +58,23 @@ func _run() -> void:
 	game.retry_button.pressed.emit()
 	_check(game.beat == game.Beat.TOILET and game.letter_found, "retry returns directly to the toilet checkpoint")
 
-	game.beat = game.Beat.CLASSROOM
-	game.player = Vector2(360, 372)
+	await process_frame
 	_press_key(KEY_E)
-	Input.action_press("move_right")
-	await create_timer(1.75).timeout
-	Input.action_release("move_right")
-	_check(game.beat == game.Beat.TOILET and game.player.x >= game.HIDE_SPOT.position.x, "player can reach the highlighted stall before timeout")
+	_check(bool(game.restroom_visual.get("stall_door_open")), "E opens the hide stall")
+	await create_timer(0.7).timeout
+	Input.action_press("move_left")
+	await create_timer(0.55).timeout
+	Input.action_release("move_left")
+	_check(game.beat == game.Beat.TOILET and bool(game.restroom_visual.call("inside_hide_stall")) and game.hide_time > 0.0, "left movement reaches the open stall before the three-second timeout")
 	_press_key(KEY_E)
-	_check(game.beat == game.Beat.MIRROR, "interacting in stall survives the event")
+	_check(game.beat == game.Beat.TOILET and game.is_hidden, "interacting in stall begins the hide stage")
+	await create_timer(1.5).timeout
+	_check(game.beat == game.Beat.MIRROR, "surviving the hide stage reveals the mirror objective")
 	game.player = Vector2(820, 205)
 	_press_key(KEY_E)
 	_check(game.beat == game.Beat.REFLECTION, "mirror interaction reveals reflection apparition")
 	_check(game.objective.text.contains("Trong gương"), "reflection objective is shown in Vietnamese")
+	await create_timer(0.7).timeout
 	_press_key(KEY_E)
 	_check(game.beat == game.Beat.GHOST, "turning around advances the mirror beat")
 	_press_key(KEY_E)

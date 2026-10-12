@@ -26,13 +26,13 @@ Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đ�
 - **H** — gợi ý mạch điện sau vài lần thử.
 - **A / B** — chọn cách xử lý bài đăng ở cảnh 10.
 - **X** — xin dừng thử thách cờ vua; E rời bàn hoặc R chơi lại.
-- **Esc** — thoát.
+- **Esc** — thả chuột khỏi góc nhìn 3D.
 
 ## Nội dung
 
 Các scene 01–04 mở đầu bằng lá thư, lớp học, thử thách trốn trong ba giây và chiếc gương. Scenes 05–08 điều tra bảng tin, tủ A-17, nhật ký sáu mảnh, mạch điện 4×4, bảo vệ tuần tra và cuộc truy đuổi. Scenes 09–11 giải mã máy tính, khôi phục camera, cân nhắc lời đồn và ghép chứng cứ. Scenes 12–15 trả lại sáu kỷ vật, đấu một thế cờ chiếu hết hợp lệ, đối diện buổi sáng và mở một trong hai kết thúc.
 
-GameState lưu inventory, flags, chứng cứ, lựa chọn và checkpoint. Luật cờ vua thuần GDScript, không dùng engine bên ngoài. Audio ambience và SFX được tổng hợp riêng cho dự án; hình ảnh môi trường/nhân vật được vẽ bằng mã nguồn. Không có tài nguyên bên thứ ba trong bản hiện tại.
+GameState lưu inventory, flags, chứng cứ, lựa chọn và checkpoint. Luật cờ vua thuần GDScript, không dùng engine bên ngoài. Audio ambience và SFX được tổng hợp riêng cho dự án; các cảnh mở đầu 01–04 dùng model 3D Blender và texture tạo riêng cho dự án, các phần còn lại dùng hình vẽ bằng mã nguồn. Không có tài nguyên bên thứ ba trong bản hiện tại.
 
 ## Kiểm tra
 
