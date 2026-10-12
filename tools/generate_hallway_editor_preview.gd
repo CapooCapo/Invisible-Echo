@@ -28,7 +28,8 @@ func _generate() -> void:
 		if child is CollisionObject3D:
 			world.remove_child(child)
 			child.free()
-	hallway.viewport.remove_child(world)
+	var viewport := hallway.get("viewport") as SubViewport
+	viewport.remove_child(world)
 	var preview := Node3D.new()
 	preview.name = "EditorPreview3D"
 	preview.add_child(world)
@@ -42,9 +43,13 @@ func _generate() -> void:
 	var saved := ResourceSaver.save(scene, OUTPUT_PATH)
 	if saved != OK:
 		push_error("Failed to save hallway editor preview: %d" % saved)
+		preview.free()
+		hallway.free()
 		quit(1)
 		return
 	print("Saved hallway editor preview: ", OUTPUT_PATH)
+	preview.free()
+	hallway.free()
 	quit()
 
 

@@ -1,0 +1,1888 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/materials/school/ceiling_concrete.png" id="1_x0x3b"]
+[ext_resource type="Texture2D" path="res://assets/materials/school/old_plaster.png" id="2_yu8hl"]
+[ext_resource type="Texture2D" path="res://assets/materials/school/damp_base.png" id="3_yltsj"]
+[ext_resource type="Texture2D" path="res://assets/materials/school/painted_metal.png" id="4_h2wgw"]
+[ext_resource type="Texture2D" path="res://assets/materials/school/worn_wood.png" id="5_2tkv0"]
+[ext_resource type="Texture2D" path="res://assets/materials/school/notice_felt.png" id="6_0yh14"]
+
+[sub_resource type="Environment" id="Environment_x0x3b"]
+background_mode = 1
+background_color = Color(0.019607844, 0.03137255, 0.043137256, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2509804, 0.3529412, 0.4392157, 1)
+ambient_light_energy = 0.2
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yu8hl"]
+resource_name = "M_Ceiling_Concrete"
+albedo_color = Color(0.1882353, 0.23137255, 0.28627452, 1)
+albedo_texture = ExtResource("1_x0x3b")
+roughness = 0.92
+uv1_scale = Vector3(3, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yltsj"]
+size = Vector3(4.8, 0.28, 19.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2wgw"]
+size = Vector3(4.8, 0.2, 19.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tkv0"]
+resource_name = "M_Wall_OldPaint"
+albedo_color = Color(0.20392157, 0.30980393, 0.3882353, 1)
+albedo_texture = ExtResource("2_yu8hl")
+roughness = 0.92
+uv1_scale = Vector3(5, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0yh14"]
+size = Vector3(0.2, 3.3, 19.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6r37b"]
+size = Vector3(0.2, 3.3, 19.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x33o5"]
+resource_name = "M_Wall_DampLower"
+albedo_color = Color(0.14509805, 0.23137255, 0.29411766, 1)
+albedo_texture = ExtResource("3_yltsj")
+roughness = 0.92
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4sujk"]
+size = Vector3(0.035, 0.8, 19.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p4o4d"]
+resource_name = "M_Wall_FadedTrim"
+albedo_color = Color(0.39215687, 0.48235294, 0.53333336, 1)
+albedo_texture = ExtResource("2_yu8hl")
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_r4ygk"]
+size = Vector3(0.065, 0.055, 19.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qq0d8"]
+size = Vector3(0.06, 0.045, 19.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jkqix"]
+size = Vector3(0.035, 0.8, 19.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xdarl"]
+size = Vector3(0.065, 0.055, 19.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_plkww"]
+size = Vector3(0.06, 0.045, 19.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3hei7"]
+size = Vector3(4.6, 0.2, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n2tk8"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2yrs"]
+resource_name = "M_Railing_OldMetal"
+albedo_color = Color(0.7607843, 0.78431374, 0.78431374, 1)
+albedo_texture = ExtResource("4_h2wgw")
+roughness = 0.66
+
+[sub_resource type="BoxMesh" id="BoxMesh_t365r"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_df8ml"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_vm5xi"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vk85h"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3nu7m"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fr2b1"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_lkqnc"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_re816"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ytbtk"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p40yo"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_qwk41"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rlaun"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ym8qx"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kc2c6"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_udcar"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iilyq"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jwfy0"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwb8s"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_c5mlo"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fyydy"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7tgkh"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmc3d"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_qxtfg"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_86g56"]
+size = Vector3(4.6, 0.16, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k6gsx"]
+size = Vector3(0.17, 0.08, 1.46)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfbls"]
+resource_name = "M_Fluorescent"
+albedo_color = Color(0.6627451, 0.7607843, 0.8117647, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.2784314, 0.41960785, 0.50980395, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_rpm4q"]
+size = Vector3(0.09, 0.025, 1.37)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e57cq"]
+size = Vector3(0.15, 0.1, 1.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c40kr"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q130l"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2fupd"]
+resource_name = "M_Door_Recess"
+albedo_color = Color(0.101960786, 0.09411765, 0.09411765, 1)
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_4gqu6"]
+size = Vector3(0.1, 2.6, 1.55)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lntb8"]
+resource_name = "M_Door_WornWood"
+albedo_color = Color(0.73333335, 0.62352943, 0.52156866, 1)
+albedo_texture = ExtResource("5_2tkv0")
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_887fn"]
+size = Vector3(0.12, 2.42, 1.39)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7424"]
+resource_name = "M_Window_BlackGlass"
+albedo_color = Color(0.039215688, 0.078431375, 0.11372549, 1)
+roughness = 0.22
+
+[sub_resource type="BoxMesh" id="BoxMesh_p3sbu"]
+size = Vector3(0.025, 0.58, 0.78)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h7s6f"]
+size = Vector3(0.035, 0.04, 0.79)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a1ej2"]
+size = Vector3(0.09, 0.04, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7htwq"]
+size = Vector3(0.035, 0.17, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e030u"]
+size = Vector3(0.15, 0.1, 1.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bhvc7"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v8461"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mhlh6"]
+size = Vector3(0.1, 2.6, 1.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jy10r"]
+size = Vector3(0.12, 2.42, 1.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ajbp"]
+size = Vector3(0.025, 0.58, 0.78)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1cd5f"]
+size = Vector3(0.035, 0.04, 0.79)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hbmgd"]
+size = Vector3(0.09, 0.04, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h6yhs"]
+size = Vector3(0.035, 0.17, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vic10"]
+size = Vector3(0.15, 0.1, 1.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qukb"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xp4hb"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pt0dy"]
+size = Vector3(0.1, 2.6, 1.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0io7k"]
+size = Vector3(0.12, 2.42, 1.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_86hot"]
+size = Vector3(0.025, 0.58, 0.78)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1feau"]
+size = Vector3(0.035, 0.04, 0.79)
+
+[sub_resource type="BoxMesh" id="BoxMesh_22orc"]
+size = Vector3(0.09, 0.04, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5m03y"]
+size = Vector3(0.035, 0.17, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sgmcc"]
+size = Vector3(0.15, 0.1, 1.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_haox3"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jixit"]
+size = Vector3(0.15, 2.58, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kaqjl"]
+size = Vector3(0.1, 2.6, 1.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_klhb8"]
+size = Vector3(0.12, 2.42, 1.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4u7vd"]
+size = Vector3(0.025, 0.58, 0.78)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bbbsg"]
+size = Vector3(0.035, 0.04, 0.79)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fbjex"]
+size = Vector3(0.09, 0.04, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x8uhf"]
+size = Vector3(0.035, 0.17, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lj7ug"]
+size = Vector3(0.12, 1.42, 1.88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_juvd7"]
+size = Vector3(0.025, 1.18, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l3tbd"]
+size = Vector3(0.035, 1.2, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uijk1"]
+size = Vector3(0.035, 0.035, 1.65)
+
+[sub_resource type="BoxMesh" id="BoxMesh_co3xt"]
+size = Vector3(0.18, 0.1, 1.92)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7igk6"]
+size = Vector3(0.12, 1.42, 1.88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qifcy"]
+size = Vector3(0.025, 1.18, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x5bw1"]
+size = Vector3(0.035, 1.2, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vnq8n"]
+size = Vector3(0.035, 0.035, 1.65)
+
+[sub_resource type="BoxMesh" id="BoxMesh_25bh2"]
+size = Vector3(0.18, 0.1, 1.92)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8dtcs"]
+size = Vector3(0.12, 1.42, 1.88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vtmts"]
+size = Vector3(0.025, 1.18, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qw3qu"]
+size = Vector3(0.035, 1.2, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q7o43"]
+size = Vector3(0.035, 0.035, 1.65)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lsuw7"]
+size = Vector3(0.18, 0.1, 1.92)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kpcfl"]
+size = Vector3(0.12, 1.42, 1.88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fegcg"]
+size = Vector3(0.025, 1.18, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmeau"]
+size = Vector3(0.035, 1.2, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_goq5t"]
+size = Vector3(0.035, 0.035, 1.65)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0lbmj"]
+size = Vector3(0.18, 0.1, 1.92)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0jvux"]
+size = Vector3(0.07, 1.03, 1.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6skht"]
+resource_name = "M_SchoolNoticeboard_Green"
+albedo_color = Color(0.7254902, 0.77254903, 0.7411765, 1)
+albedo_texture = ExtResource("6_0yh14")
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_m5osj"]
+size = Vector3(0.015, 0.91, 1.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgx1m"]
+resource_name = "M_Letter_Yellowed"
+albedo_color = Color(0.76862746, 0.72156864, 0.627451, 1)
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_dis0w"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lyycm"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcilf"]
+resource_name = "M_DistantRed"
+albedo_color = Color(0.20392157, 0.105882354, 0.1254902, 1)
+roughness = 0.7
+emission_enabled = true
+emission = Color(0.38039216, 0.13725491, 0.1764706, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_utwip"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ogm4f"]
+resource_name = "M_Notices_AgedPaper"
+albedo_color = Color(0.65882355, 0.60784316, 0.5058824, 1)
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_6i01s"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tbq7o"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qfpp2"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lpuv2"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_krffe"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5aoy3"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_im8wx"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hbw7t"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n3e65"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v8vqm"]
+size = Vector3(0.07, 1.03, 1.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iyj5q"]
+size = Vector3(0.015, 0.91, 1.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qmoib"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s6pij"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nh8gw"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m7c1f"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qyq35"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sm54s"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d42de"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uh42p"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p3m6y"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_noomr"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5n17y"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tn7q1"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3wnvu"]
+size = Vector3(0.07, 1.03, 1.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_am86j"]
+size = Vector3(0.015, 0.91, 1.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o06wc"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s0mnl"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w87kr"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1k16w"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3sak6"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6gyb"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1ql2x"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sf6g1"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wfeoq"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c01lp"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_db3fv"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exkfd"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_aqgc1"]
+size = Vector3(0.07, 1.03, 1.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ev4nx"]
+size = Vector3(0.015, 0.91, 1.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m0hom"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k4sss"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_36fid"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u7oho"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jl0n5"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u802j"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_00lso"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8x3ch"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gxfe7"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mgry6"]
+size = Vector3(0.009, 0.19, 0.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rs3x5"]
+size = Vector3(0.003, 0.008, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q2b1q"]
+size = Vector3(0.008, 0.012, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_udafv"]
+size = Vector3(0.07, 0.22, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hpkfd"]
+size = Vector3(0.035, 0.12, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tc8cw"]
+size = Vector3(0.07, 0.22, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xopbg"]
+size = Vector3(0.035, 0.12, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ywdgw"]
+size = Vector3(0.07, 0.22, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8sbp1"]
+size = Vector3(0.035, 0.12, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m7c1i"]
+size = Vector3(2.1, 3.12, 0.13)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4a0ef"]
+size = Vector3(2.1, 3.12, 0.13)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bur4b"]
+size = Vector3(2, 0.38, 0.13)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cgcho"]
+size = Vector3(1.55, 2.63, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j80md"]
+size = Vector3(0.66, 0.59, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1hcj4"]
+size = Vector3(0.75, 0.045, 0.018)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kweeu"]
+size = Vector3(0.07, 0.035, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pohuq"]
+size = Vector3(2.1, 3.1, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7qn4a"]
+size = Vector3(2.1, 3.1, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nn6sf"]
+size = Vector3(2, 0.4, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bglej"]
+size = Vector3(2, 0.28, 1.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4yte1"]
+resource_name = "M_Floor_Dark_Wood_A"
+albedo_color = Color(0.28627452, 0.2, 0.16078432, 1)
+albedo_texture = ExtResource("5_2tkv0")
+roughness = 0.72
+uv1_scale = Vector3(1.1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_31lu4"]
+size = Vector3(0.775, 0.034, 1.46)
+
+[sub_resource type="MultiMesh" id="MultiMesh_4ntyc"]
+transform_format = 1
+instance_count = 39
+mesh = SubResource("BoxMesh_31lu4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvddc"]
+resource_name = "M_Floor_Dark_Wood_B"
+albedo_color = Color(0.22352941, 0.15294118, 0.12156863, 1)
+albedo_texture = ExtResource("5_2tkv0")
+roughness = 0.78
+
+[sub_resource type="MultiMesh" id="MultiMesh_maagd"]
+transform_format = 1
+instance_count = 39
+mesh = SubResource("BoxMesh_31lu4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxg30"]
+resource_name = "M_WetFloor_Patch"
+transparency = 1
+albedo_color = Color(0.35, 0.44, 0.49, 0.23)
+roughness = 0.16
+
+[sub_resource type="BoxMesh" id="BoxMesh_qix7r"]
+size = Vector3(0.8, 0.006, 0.43)
+
+[sub_resource type="BoxMesh" id="BoxMesh_irg4x"]
+size = Vector3(0.8, 0.006, 0.43)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7gbha"]
+size = Vector3(0.8, 0.006, 0.43)
+
+[sub_resource type="BoxMesh" id="BoxMesh_alvxv"]
+size = Vector3(0.8, 0.006, 0.43)
+
+[sub_resource type="BoxMesh" id="BoxMesh_chsvc"]
+size = Vector3(0.32, 0.008, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbuw6"]
+resource_name = "M_BloodWriting"
+albedo_color = Color(0.69411767, 0.039215688, 0.08627451, 1)
+roughness = 0.96
+
+[sub_resource type="BoxMesh" id="BoxMesh_y8yr2"]
+size = Vector3(0.012, 0.13, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pa5rp"]
+size = Vector3(0.012, 0.22, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vq7kk"]
+size = Vector3(0.012, 0.16, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c7i3j"]
+size = Vector3(0.012, 0.1, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gyaw3"]
+size = Vector3(0.012, 0.13, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xjmw7"]
+size = Vector3(0.012, 0.22, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q58i2"]
+size = Vector3(0.012, 0.16, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bewjo"]
+size = Vector3(0.012, 0.1, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3rio4"]
+size = Vector3(0.96, 0.07, 0.54)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lfo0h"]
+size = Vector3(0.045, 0.52, 0.045)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7i2dx"]
+size = Vector3(0.045, 0.52, 0.045)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wrlhy"]
+size = Vector3(0.045, 0.52, 0.045)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cnjjd"]
+size = Vector3(0.045, 0.52, 0.045)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jjxo2"]
+size = Vector3(0.2, 0.005, 0.27)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w1b3p"]
+size = Vector3(0.2, 0.005, 0.27)
+
+[sub_resource type="BoxMesh" id="BoxMesh_daqv0"]
+size = Vector3(0.2, 0.005, 0.27)
+
+[node name="EditorPreview3D" type="Node3D" unique_id=2072079035]
+
+[node name="SchoolHallway" type="Node3D" parent="." unique_id=1762944584]
+
+[node name="@WorldEnvironment@2" type="WorldEnvironment" parent="SchoolHallway" unique_id=1926945581]
+environment = SubResource("Environment_x0x3b")
+
+[node name="ColdMoonlight" type="DirectionalLight3D" parent="SchoolHallway" unique_id=1421693936]
+transform = Transform3D(0.88294756, -0.33770958, 0.32612237, 0, 0.6946584, 0.7193398, -0.46947157, -0.6351393, 0.61334693, 0, 0, 0)
+light_color = Color(0.3882353, 0.52156866, 0.627451, 1)
+light_energy = 0.14
+shadow_enabled = true
+
+[node name="FloorSlab" type="MeshInstance3D" parent="SchoolHallway" unique_id=1375601261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14, -3.6)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_yltsj")
+
+[node name="Ceiling" type="MeshInstance3D" parent="SchoolHallway" unique_id=2046980644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.35, -3.6)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_h2wgw")
+
+[node name="ClassroomWall" type="MeshInstance3D" parent="SchoolHallway" unique_id=738762870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.39, 1.64, -3.6)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_0yh14")
+
+[node name="ExteriorWall" type="MeshInstance3D" parent="SchoolHallway" unique_id=1104752670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.39, 1.64, -3.6)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_6r37b")
+
+[node name="Wall_DampBase_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1728148132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27, 0.42, -3.6)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_4sujk")
+
+[node name="Wall_ChairRail_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=781359795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27, 0.87, -3.6)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_r4ygk")
+
+[node name="Wall_UpperTrim_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=468064698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27, 2.92, -3.6)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_qq0d8")
+
+[node name="Wall_DampBase_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1565875155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27, 0.42, -3.6)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_jkqix")
+
+[node name="Wall_ChairRail_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=730841765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27, 0.87, -3.6)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_xdarl")
+
+[node name="Wall_UpperTrim_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1479800088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27, 2.92, -3.6)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_plkww")
+
+[node name="CeilingBeam" type="MeshInstance3D" parent="SchoolHallway" unique_id=1886277217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.17, -3.6)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_3hei7")
+
+[node name="CrossBeam_-12" type="MeshInstance3D" parent="SchoolHallway" unique_id=183003771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, -12)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_n2tk8")
+
+[node name="FluorescentCase_-12" type="MeshInstance3D" parent="SchoolHallway" unique_id=1555303977]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, -12)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_t365r")
+
+[node name="FluorescentTube_-12" type="MeshInstance3D" parent="SchoolHallway" unique_id=1437123797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -12)
+material_override = SubResource("StandardMaterial3D_df8ml")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_vm5xi")
+
+[node name="Lamp_-12" type="OmniLight3D" parent="SchoolHallway" unique_id=1026912463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -12)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.16
+omni_range = 3.35
+
+[node name="CrossBeam_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=1800300454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, -9)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_vk85h")
+
+[node name="FluorescentCase_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=2124717263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, -9)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_3nu7m")
+
+[node name="FluorescentTube_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=1965539878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -9)
+material_override = SubResource("StandardMaterial3D_fr2b1")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_lkqnc")
+
+[node name="Lamp_-9" type="OmniLight3D" parent="SchoolHallway" unique_id=2011354222]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -9)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.28
+omni_range = 3.35
+
+[node name="CrossBeam_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1644130783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, -6)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_re816")
+
+[node name="FluorescentCase_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1528909740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, -6)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_ytbtk")
+
+[node name="FluorescentTube_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=89166882]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -6)
+material_override = SubResource("StandardMaterial3D_p40yo")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qwk41")
+
+[node name="Lamp_-6" type="OmniLight3D" parent="SchoolHallway" unique_id=1760833021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -6)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.16
+omni_range = 3.35
+
+[node name="CrossBeam_-3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1372623102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, -3)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_rlaun")
+
+[node name="FluorescentCase_-3" type="MeshInstance3D" parent="SchoolHallway" unique_id=256601835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, -3)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_ym8qx")
+
+[node name="FluorescentTube_-3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1077766781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -3)
+material_override = SubResource("StandardMaterial3D_kc2c6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_udcar")
+
+[node name="Lamp_-3" type="OmniLight3D" parent="SchoolHallway" unique_id=437251309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -3)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.28
+omni_range = 3.35
+
+[node name="CrossBeam_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1036089673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_iilyq")
+
+[node name="FluorescentCase_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=468894445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, 0)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_jwfy0")
+
+[node name="FluorescentTube_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=735261801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 0)
+material_override = SubResource("StandardMaterial3D_gwb8s")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_c5mlo")
+
+[node name="Lamp_0" type="OmniLight3D" parent="SchoolHallway" unique_id=1285211219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.16
+shadow_enabled = true
+omni_range = 3.35
+
+[node name="CrossBeam_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1493129439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 3)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_fyydy")
+
+[node name="FluorescentCase_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=492086093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, 3)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_7tgkh")
+
+[node name="FluorescentTube_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=207038055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 3)
+material_override = SubResource("StandardMaterial3D_lmc3d")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qxtfg")
+
+[node name="Lamp_3" type="OmniLight3D" parent="SchoolHallway" unique_id=2094347036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 3)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.28
+omni_range = 3.35
+
+[node name="CrossBeam_6" type="MeshInstance3D" parent="SchoolHallway" unique_id=2020754945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 6)
+material_override = SubResource("StandardMaterial3D_x33o5")
+mesh = SubResource("BoxMesh_86g56")
+
+[node name="FluorescentCase_6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1065134994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13, 6)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_k6gsx")
+
+[node name="FluorescentTube_6" type="MeshInstance3D" parent="SchoolHallway" unique_id=410578281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 6)
+material_override = SubResource("StandardMaterial3D_mfbls")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_rpm4q")
+
+[node name="Lamp_6" type="OmniLight3D" parent="SchoolHallway" unique_id=539569051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 6)
+light_color = Color(0.68235296, 0.7764706, 0.8235294, 1)
+light_energy = 0.16
+omni_range = 3.35
+
+[node name="DoorLintel_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=324014722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.215, 2.69, 3)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_e57cq")
+
+[node name="DoorJamb_3_-82" type="MeshInstance3D" parent="SchoolHallway" unique_id=2020524952]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, 2.18)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_c40kr")
+
+[node name="DoorJamb_3_82" type="MeshInstance3D" parent="SchoolHallway" unique_id=831930704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, 3.82)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_q130l")
+
+[node name="ClassDoorFrame_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1698805979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26, 1.35, 3)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_4gqu6")
+
+[node name="ClassDoor_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=845634192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.19, 1.32, 3)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_887fn")
+
+[node name="DoorWindow_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1623198398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.115, 1.9, 3)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_p3sbu")
+
+[node name="DoorWindowMullion_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=2109920653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.9, 3)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_h7s6f")
+
+[node name="DoorHandle_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=336651254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.15, 2.48)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_a1ej2")
+
+[node name="ClassroomSign_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1190358618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09, 2.72, 3)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_7htwq")
+
+[node name="VietnameseSign" type="Label3D" parent="SchoolHallway" unique_id=385681292]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.055, 2.72, 3)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "LỚP 12A1"
+font_size = 38
+
+[node name="DoorLintel_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1120042955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.215, 2.69, -1)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_e030u")
+
+[node name="DoorJamb_-1_-82" type="MeshInstance3D" parent="SchoolHallway" unique_id=202715729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -1.82)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_bhvc7")
+
+[node name="DoorJamb_-1_82" type="MeshInstance3D" parent="SchoolHallway" unique_id=1749608074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -0.18)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_v8461")
+
+[node name="ClassDoorFrame_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=540739460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26, 1.35, -1)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_mhlh6")
+
+[node name="ClassDoor_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=348084915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.19, 1.32, -1)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_jy10r")
+
+[node name="DoorWindow_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1396254841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.115, 1.9, -1)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_6ajbp")
+
+[node name="DoorWindowMullion_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1590601664]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.9, -1)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_1cd5f")
+
+[node name="DoorHandle_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=86346163]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.15, -1.52)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_hbmgd")
+
+[node name="ClassroomSign_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=251093931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09, 2.72, -1)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_h6yhs")
+
+[node name="@Label3D@7" type="Label3D" parent="SchoolHallway" unique_id=564180914]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.055, 2.72, -1)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "LỚP 12A2"
+font_size = 38
+
+[node name="DoorLintel_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=837219633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.215, 2.69, -5)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_vic10")
+
+[node name="DoorJamb_-5_-82" type="MeshInstance3D" parent="SchoolHallway" unique_id=497868739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -5.82)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_4qukb")
+
+[node name="DoorJamb_-5_82" type="MeshInstance3D" parent="SchoolHallway" unique_id=1961663639]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -4.18)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_xp4hb")
+
+[node name="ClassDoorFrame_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=1073379230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26, 1.35, -5)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_pt0dy")
+
+[node name="ClassDoor_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=1433128884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.19, 1.32, -5)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_0io7k")
+
+[node name="DoorWindow_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=914540103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.115, 1.9, -5)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_86hot")
+
+[node name="DoorWindowMullion_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=1063867771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.9, -5)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_1feau")
+
+[node name="DoorHandle_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=729179106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.15, -5.52)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_22orc")
+
+[node name="ClassroomSign_-5" type="MeshInstance3D" parent="SchoolHallway" unique_id=1365504138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09, 2.72, -5)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_5m03y")
+
+[node name="@Label3D@8" type="Label3D" parent="SchoolHallway" unique_id=1072647282]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.055, 2.72, -5)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "LỚP 12A3"
+font_size = 38
+
+[node name="DoorLintel_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=836982449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.215, 2.69, -9)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_sgmcc")
+
+[node name="DoorJamb_-9_-82" type="MeshInstance3D" parent="SchoolHallway" unique_id=333885620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -9.82)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_haox3")
+
+[node name="DoorJamb_-9_82" type="MeshInstance3D" parent="SchoolHallway" unique_id=1242989324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.205, 1.34, -8.18)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_jixit")
+
+[node name="ClassDoorFrame_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=760038911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26, 1.35, -9)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_kaqjl")
+
+[node name="ClassDoor_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=265833682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.19, 1.32, -9)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_klhb8")
+
+[node name="DoorWindow_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=1728094807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.115, 1.9, -9)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_4u7vd")
+
+[node name="DoorWindowMullion_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=662647773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.9, -9)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_bbbsg")
+
+[node name="DoorHandle_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=479724591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.15, -9.52)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_fbjex")
+
+[node name="ClassroomSign_-9" type="MeshInstance3D" parent="SchoolHallway" unique_id=738096541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09, 2.72, -9)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_x8uhf")
+
+[node name="@Label3D@9" type="Label3D" parent="SchoolHallway" unique_id=797784196]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.055, 2.72, -9)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "LỚP 12A4"
+font_size = 38
+
+[node name="LeftWindowFrame_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1418717373]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 1.94, 2)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_lj7ug")
+
+[node name="LeftWindowGlass_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=366942137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.175, 1.94, 2)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_juvd7")
+
+[node name="LeftWindowBarV_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1550431790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, 2)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_l3tbd")
+
+[node name="LeftWindowBarH_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=2001477513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, 2)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_uijk1")
+
+[node name="LeftWindowSill_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=151289357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19, 1.18, 2)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_co3xt")
+
+[node name="LeftWindowFrame_-2" type="MeshInstance3D" parent="SchoolHallway" unique_id=702319713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 1.94, -2)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_7igk6")
+
+[node name="LeftWindowGlass_-2" type="MeshInstance3D" parent="SchoolHallway" unique_id=2084211262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.175, 1.94, -2)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qifcy")
+
+[node name="LeftWindowBarV_-2" type="MeshInstance3D" parent="SchoolHallway" unique_id=635402762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -2)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_x5bw1")
+
+[node name="LeftWindowBarH_-2" type="MeshInstance3D" parent="SchoolHallway" unique_id=946917111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -2)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_vnq8n")
+
+[node name="LeftWindowSill_-2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1507258388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19, 1.18, -2)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_25bh2")
+
+[node name="LeftWindowFrame_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=401483140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 1.94, -6)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_8dtcs")
+
+[node name="LeftWindowGlass_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1990255975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.175, 1.94, -6)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_vtmts")
+
+[node name="LeftWindowBarV_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1702913653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -6)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_qw3qu")
+
+[node name="LeftWindowBarH_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=1164856129]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -6)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_q7o43")
+
+[node name="LeftWindowSill_-6" type="MeshInstance3D" parent="SchoolHallway" unique_id=18445807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19, 1.18, -6)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_lsuw7")
+
+[node name="LeftWindowFrame_-10" type="MeshInstance3D" parent="SchoolHallway" unique_id=202540497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 1.94, -10)
+material_override = SubResource("StandardMaterial3D_p4o4d")
+mesh = SubResource("BoxMesh_kpcfl")
+
+[node name="LeftWindowGlass_-10" type="MeshInstance3D" parent="SchoolHallway" unique_id=724455309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.175, 1.94, -10)
+material_override = SubResource("StandardMaterial3D_x7424")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_fegcg")
+
+[node name="LeftWindowBarV_-10" type="MeshInstance3D" parent="SchoolHallway" unique_id=421494689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -10)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_lmeau")
+
+[node name="LeftWindowBarH_-10" type="MeshInstance3D" parent="SchoolHallway" unique_id=1906018276]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.94, -10)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_goq5t")
+
+[node name="LeftWindowSill_-10" type="MeshInstance3D" parent="SchoolHallway" unique_id=2130061052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19, 1.18, -10)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_0lbmj")
+
+[node name="BoardFrame_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1856221672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.225, 1.75, 1)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_0jvux")
+
+[node name="BoardFelt_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=995463398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.174, 1.75, 1)
+material_override = SubResource("StandardMaterial3D_6skht")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_m5osj")
+
+[node name="@Label3D@10" type="Label3D" parent="SchoolHallway" unique_id=890133604]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.145, 2.08, 1)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "THÔNG BÁO"
+font_size = 38
+
+[node name="Notice_1_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=487443543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, 0.73)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_dis0w")
+
+[node name="NoticeText_1_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=789917411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, 0.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_lyycm")
+
+[node name="NoticePin_1_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=2131401195]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, 0.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_utwip")
+
+[node name="Notice_1_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=742531543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, 1.27)
+material_override = SubResource("StandardMaterial3D_ogm4f")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_6i01s")
+
+[node name="NoticeText_1_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=564938406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, 1.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_tbq7o")
+
+[node name="NoticePin_1_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=643974824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, 1.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qfpp2")
+
+[node name="Notice_1_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=678459632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, 0.73)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_lpuv2")
+
+[node name="NoticeText_1_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=80795909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, 0.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_krffe")
+
+[node name="NoticePin_1_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=119457056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, 0.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_5aoy3")
+
+[node name="Notice_1_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=47928034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, 1.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_im8wx")
+
+[node name="NoticeText_1_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1220283468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, 1.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_hbw7t")
+
+[node name="NoticePin_1_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=906899228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, 1.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_n3e65")
+
+[node name="BoardFrame_-3" type="MeshInstance3D" parent="SchoolHallway" unique_id=620855235]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.225, 1.75, -3)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_v8vqm")
+
+[node name="BoardFelt_-3" type="MeshInstance3D" parent="SchoolHallway" unique_id=769119765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.174, 1.75, -3)
+material_override = SubResource("StandardMaterial3D_6skht")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_iyj5q")
+
+[node name="@Label3D@11" type="Label3D" parent="SchoolHallway" unique_id=1664356959]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.145, 2.08, -3)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "THÔNG BÁO"
+font_size = 38
+
+[node name="Notice_-3_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=490136024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -3.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qmoib")
+
+[node name="NoticeText_-3_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1490472997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -3.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_s6pij")
+
+[node name="NoticePin_-3_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1009361815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -3.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_nh8gw")
+
+[node name="Notice_-3_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=836608023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -2.73)
+material_override = SubResource("StandardMaterial3D_ogm4f")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_m7c1f")
+
+[node name="NoticeText_-3_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1132235367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -2.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qyq35")
+
+[node name="NoticePin_-3_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1304658663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -2.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_sm54s")
+
+[node name="Notice_-3_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1029128095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -3.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_d42de")
+
+[node name="NoticeText_-3_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=2080511549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -3.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_uh42p")
+
+[node name="NoticePin_-3_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=186844898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -3.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_p3m6y")
+
+[node name="Notice_-3_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=639053917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -2.73)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_noomr")
+
+[node name="NoticeText_-3_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=27861703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -2.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_5n17y")
+
+[node name="NoticePin_-3_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=548381558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -2.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_tn7q1")
+
+[node name="BoardFrame_-7" type="MeshInstance3D" parent="SchoolHallway" unique_id=2117086914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.225, 1.75, -7)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_3wnvu")
+
+[node name="BoardFelt_-7" type="MeshInstance3D" parent="SchoolHallway" unique_id=214721572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.174, 1.75, -7)
+material_override = SubResource("StandardMaterial3D_6skht")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_am86j")
+
+[node name="@Label3D@12" type="Label3D" parent="SchoolHallway" unique_id=202990815]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.145, 2.08, -7)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "THÔNG BÁO"
+font_size = 38
+
+[node name="Notice_-7_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1876841873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -7.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_o06wc")
+
+[node name="NoticeText_-7_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1770518239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -7.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_s0mnl")
+
+[node name="NoticePin_-7_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=826992531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -7.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_w87kr")
+
+[node name="Notice_-7_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=272850542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -6.73)
+material_override = SubResource("StandardMaterial3D_ogm4f")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1k16w")
+
+[node name="NoticeText_-7_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=761588344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -6.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_3sak6")
+
+[node name="NoticePin_-7_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1836700710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -6.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_c6gyb")
+
+[node name="Notice_-7_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1878786239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -7.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1ql2x")
+
+[node name="NoticeText_-7_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1575209386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -7.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_sf6g1")
+
+[node name="NoticePin_-7_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1276785151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -7.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_wfeoq")
+
+[node name="Notice_-7_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1922236809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -6.73)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_c01lp")
+
+[node name="NoticeText_-7_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=781467355]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -6.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_db3fv")
+
+[node name="NoticePin_-7_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1644946732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -6.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_exkfd")
+
+[node name="BoardFrame_-11" type="MeshInstance3D" parent="SchoolHallway" unique_id=1074849623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.225, 1.75, -11)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_aqgc1")
+
+[node name="BoardFelt_-11" type="MeshInstance3D" parent="SchoolHallway" unique_id=1207627914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.174, 1.75, -11)
+material_override = SubResource("StandardMaterial3D_6skht")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_ev4nx")
+
+[node name="@Label3D@13" type="Label3D" parent="SchoolHallway" unique_id=2003920036]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.145, 2.08, -11)
+pixel_size = 0.0017
+modulate = Color(0.8392157, 0.78039217, 0.64705884, 1)
+text = "THÔNG BÁO"
+font_size = 38
+
+[node name="Notice_-11_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=311934488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -11.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_m0hom")
+
+[node name="NoticeText_-11_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1245808579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -11.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_k4sss")
+
+[node name="NoticePin_-11_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1186242612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -11.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_36fid")
+
+[node name="Notice_-11_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1778476039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.75, -10.73)
+material_override = SubResource("StandardMaterial3D_ogm4f")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_u7oho")
+
+[node name="NoticeText_-11_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1589259069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.762, -10.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_jl0n5")
+
+[node name="NoticePin_-11_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1901055283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.83, -10.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_u802j")
+
+[node name="Notice_-11_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=13883758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -11.27)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_00lso")
+
+[node name="NoticeText_-11_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=419405403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -11.27)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_8x3ch")
+
+[node name="NoticePin_-11_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=530061551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -11.27)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_gxfe7")
+
+[node name="Notice_-11_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=764286791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.149, 1.48, -10.73)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_mgry6")
+
+[node name="NoticeText_-11_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=1448059783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.138, 1.492, -10.73)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_rs3x5")
+
+[node name="NoticePin_-11_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=681591459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.135, 1.56, -10.73)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_q2b1q")
+
+[node name="RedAlarmFrame_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1106147946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.125, 2.34, 0)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_udafv")
+
+[node name="RedAlarm_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1799401456]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.075, 2.34, 0)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_hpkfd")
+
+[node name="RedAlarmFrame_-4" type="MeshInstance3D" parent="SchoolHallway" unique_id=934718311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.125, 2.34, -4)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_tc8cw")
+
+[node name="RedAlarm_-4" type="MeshInstance3D" parent="SchoolHallway" unique_id=438688695]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.075, 2.34, -4)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_xopbg")
+
+[node name="RedAlarmFrame_-8" type="MeshInstance3D" parent="SchoolHallway" unique_id=1112470656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.125, 2.34, -8)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_ywdgw")
+
+[node name="RedAlarm_-8" type="MeshInstance3D" parent="SchoolHallway" unique_id=1911257916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.075, 2.34, -8)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_8sbp1")
+
+[node name="RedExitGlow" type="OmniLight3D" parent="SchoolHallway" unique_id=302551013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 2.2, -12.7)
+light_color = Color(0.64705884, 0.13333334, 0.1764706, 1)
+light_energy = 1.12
+shadow_enabled = true
+omni_range = 4.2
+
+[node name="FarExitLeft" type="MeshInstance3D" parent="SchoolHallway" unique_id=1564047016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 1.55, -13.38)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_m7c1i")
+
+[node name="FarExitRight" type="MeshInstance3D" parent="SchoolHallway" unique_id=1368425435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05, 1.55, -13.38)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_4a0ef")
+
+[node name="FarExitLintel" type="MeshInstance3D" parent="SchoolHallway" unique_id=2125643063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.92, -13.38)
+material_override = SubResource("StandardMaterial3D_2fupd")
+mesh = SubResource("BoxMesh_bur4b")
+
+[node name="ExitDoor" type="MeshInstance3D" parent="SchoolHallway" unique_id=847575005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.38, -13.27)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_cgcho")
+
+[node name="ExitWindow" type="MeshInstance3D" parent="SchoolHallway" unique_id=1576379744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.96, -13.225)
+material_override = SubResource("StandardMaterial3D_fcilf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_j80md")
+
+[node name="ExitWindowBar" type="MeshInstance3D" parent="SchoolHallway" unique_id=445434410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.96, -13.2)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_1hcj4")
+
+[node name="ExitDoorHandle" type="MeshInstance3D" parent="SchoolHallway" unique_id=1526882705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48, 1.17, -13.18)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_kweeu")
+
+[node name="EndWallLeft" type="MeshInstance3D" parent="SchoolHallway" unique_id=1420021101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 1.55, -13.37)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_pohuq")
+
+[node name="EndWallRight" type="MeshInstance3D" parent="SchoolHallway" unique_id=635253895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05, 1.55, -13.37)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_7qn4a")
+
+[node name="EndWallTop" type="MeshInstance3D" parent="SchoolHallway" unique_id=657117304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.92, -13.37)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_nn6sf")
+
+[node name="ExitLanding" type="MeshInstance3D" parent="SchoolHallway" unique_id=764292383]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14, -14.05)
+material_override = SubResource("StandardMaterial3D_yu8hl")
+mesh = SubResource("BoxMesh_bglej")
+
+[node name="WeatheredTiles_0" type="MultiMeshInstance3D" parent="SchoolHallway" unique_id=979543623]
+material_override = SubResource("StandardMaterial3D_4yte1")
+multimesh = SubResource("MultiMesh_4ntyc")
+
+[node name="WeatheredTiles_1" type="MultiMeshInstance3D" parent="SchoolHallway" unique_id=1324799607]
+material_override = SubResource("StandardMaterial3D_cvddc")
+multimesh = SubResource("MultiMesh_maagd")
+
+[node name="WetFloor_21" type="MeshInstance3D" parent="SchoolHallway" unique_id=846847057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.038, 2.1)
+material_override = SubResource("StandardMaterial3D_wxg30")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qix7r")
+
+[node name="WetFloor_-18" type="MeshInstance3D" parent="SchoolHallway" unique_id=1322356166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.038, -1.8)
+material_override = SubResource("StandardMaterial3D_wxg30")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_irg4x")
+
+[node name="WetFloor_-64" type="MeshInstance3D" parent="SchoolHallway" unique_id=780747624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.038, -6.4)
+material_override = SubResource("StandardMaterial3D_wxg30")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_7gbha")
+
+[node name="WetFloor_-102" type="MeshInstance3D" parent="SchoolHallway" unique_id=156866013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.038, -10.2)
+material_override = SubResource("StandardMaterial3D_wxg30")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_alvxv")
+
+[node name="FoldedLetter3D" type="Node3D" parent="SchoolHallway" unique_id=813546588]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
+
+[node name="@MeshInstance3D@18" type="MeshInstance3D" parent="SchoolHallway/FoldedLetter3D" unique_id=363622512]
+transform = Transform3D(0.9563048, 0, -0.2923717, 0, 1, 0, 0.2923717, 0, 0.9563048, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+mesh = SubResource("BoxMesh_chsvc")
+
+[node name="BloodPlea_-1" type="Label3D" parent="SchoolHallway" unique_id=889089901]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.12, 2.8, -4)
+visible = false
+pixel_size = 0.0055
+modulate = Color(0.6784314, 0.02745098, 0.07450981, 1)
+outline_modulate = Color(0.15686275, 0, 0.03529412, 1)
+text = "CỨU TÔI"
+font_size = 72
+outline_size = 5
+
+[node name="BloodDrip_-1_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=1955420953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.105, 2.515, -3.45)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_y8yr2")
+
+[node name="BloodDrip_-1_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1609292083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.105, 2.47, -3.82)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_pa5rp")
+
+[node name="BloodDrip_-1_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1473169010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.105, 2.5, -4.24)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_vq7kk")
+
+[node name="BloodDrip_-1_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=287705895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.105, 2.53, -4.58)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_c7i3j")
+
+[node name="BloodPlea_1" type="Label3D" parent="SchoolHallway" unique_id=1776310783]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.99, 2.8, -3)
+visible = false
+pixel_size = 0.0055
+modulate = Color(0.6784314, 0.02745098, 0.07450981, 1)
+outline_modulate = Color(0.15686275, 0, 0.03529412, 1)
+text = "CỨU TÔI"
+font_size = 72
+outline_size = 5
+
+[node name="BloodDrip_1_0" type="MeshInstance3D" parent="SchoolHallway" unique_id=965672098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 2.515, -3.55)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_gyaw3")
+
+[node name="BloodDrip_1_1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1819016529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 2.47, -3.18)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_xjmw7")
+
+[node name="BloodDrip_1_2" type="MeshInstance3D" parent="SchoolHallway" unique_id=1744416721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 2.5, -2.76)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_q58i2")
+
+[node name="BloodDrip_1_3" type="MeshInstance3D" parent="SchoolHallway" unique_id=597853395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 2.53, -2.42)
+visible = false
+material_override = SubResource("StandardMaterial3D_qbuw6")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_bewjo")
+
+[node name="LetterReadability" type="OmniLight3D" parent="SchoolHallway" unique_id=1974409190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+light_color = Color(0.92941177, 0.8235294, 0.6392157, 1)
+light_energy = 0.58
+omni_range = 2.8
+
+[node name="DiscardedDesk" type="MeshInstance3D" parent="SchoolHallway" unique_id=442149125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.42, 0.56, -7.1)
+material_override = SubResource("StandardMaterial3D_lntb8")
+mesh = SubResource("BoxMesh_3rio4")
+
+[node name="DeskLeg" type="MeshInstance3D" parent="SchoolHallway" unique_id=1319276716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04, 0.27, -7.31)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_lfo0h")
+
+[node name="@MeshInstance3D@19" type="MeshInstance3D" parent="SchoolHallway" unique_id=1656192257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04, 0.27, -6.9)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_7i2dx")
+
+[node name="@MeshInstance3D@20" type="MeshInstance3D" parent="SchoolHallway" unique_id=868047094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.27, -7.31)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_wrlhy")
+
+[node name="@MeshInstance3D@21" type="MeshInstance3D" parent="SchoolHallway" unique_id=1562784942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.27, -6.9)
+material_override = SubResource("StandardMaterial3D_b2yrs")
+mesh = SubResource("BoxMesh_cnjjd")
+
+[node name="ScatteredPaper" type="MeshInstance3D" parent="SchoolHallway" unique_id=467950816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55, 0.041, 1.2)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_jjxo2")
+
+[node name="@MeshInstance3D@22" type="MeshInstance3D" parent="SchoolHallway" unique_id=1466188880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55, 0.041, -2.6)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_w1b3p")
+
+[node name="@MeshInstance3D@23" type="MeshInstance3D" parent="SchoolHallway" unique_id=2053947869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55, 0.041, -6.4)
+material_override = SubResource("StandardMaterial3D_kgx1m")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_daqv0")
