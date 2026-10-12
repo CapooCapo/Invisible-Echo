@@ -4,7 +4,7 @@
 
 - `assets/audio/ambience/school_night.wav`, `computer_room.wav`: synthesized for this project using deterministic Python standard-library waveform generation.
 - `assets/audio/sfx/*.wav`: synthesized for this project using deterministic Python standard-library waveform generation.
-- Earlier environments, props, UI and silhouettes: drawn in GDScript at runtime. Opening scenes 01–04 now also use project-generated Blender GLBs and procedural school textures; their source generators are in `tools/generate_hoang.py`, `tools/generate_an.py`, `tools/generate_npcs.py`, and `tools/generate_school_textures.py`.
+- Earlier environments, props, UI and character silhouettes: drawn in GDScript at runtime. The in-progress 3D visual pass adds original Blender GLBs, procedural 256 px textures and Godot 3D geometry; see `ASSET_LICENSES.md` and `VISUAL_ASSETS.md`.
 
 No third-party assets, fonts, sample packs, external chess engine, or licensed services are included. Therefore there are no third-party attribution requirements for the current project contents. Recheck provenance and add per-file license notes before integrating any future external asset.
 

@@ -36,6 +36,13 @@ var reveal_drips: Array[MeshInstance3D] = []
 
 
 func _ready() -> void:
+	# The serialized preview is outside the SubViewport so Godot's 3D scene
+	# editor can display it. Runtime builds the same corridor inside its own
+	# SubViewport; remove the editor copy before the first rendered frame.
+	var editor_preview := get_node_or_null("EditorPreview3D")
+	if editor_preview != null:
+		remove_child(editor_preview)
+		editor_preview.free()
 	viewport = SubViewport.new()
 	viewport.name = "SpatialViewport"
 	viewport.size = Vector2i(960, 540)

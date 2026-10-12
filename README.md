@@ -14,7 +14,7 @@ Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đ�
 
 ## Bản chạy Linux
 
-`tools/build_linux.sh` tạo bản Linux trong `builds/` bằng template release Godot 4.7.2 và một PCK đặt cạnh executable; cần giữ hai file cùng thư mục. Hai preset Linux và Windows trong `export_presets.cfg` cũng đã xuất thành công bằng template Godot 4.7.2 đã xác minh SHA-512. Cặp Linux mới đã smoke-test headless với save QA riêng; full GUI playthrough chưa xác minh. File Windows `.exe` đã xác nhận định dạng PE32+ x86_64 nhưng chưa chạy thử trên Windows. Template, archive và build artifacts được giữ trong `builds/` (bị Git ignore).
+tools/build_linux.sh tạo bản Linux trong builds/ bằng template release Godot 4.7.2 và một PCK đặt cạnh executable; cần giữ hai file cùng thư mục. Bản xuất Linux/Windows trong docs/RELEASE_QA.md là baseline trước đợt nâng cấp 3D. Bản 3D hiện tại đã được xuất và khởi chạy headless riêng tại builds/visual-qa/final-20261011/; xem docs/VISUAL_QA.md để biết giới hạn xác minh. Windows runtime và chơi thử bản 3D toàn tuyến vẫn chưa được kiểm tra. Template, archive và build artifacts được giữ trong builds/ (bị Git ignore).
 
 ## Điều khiển
 
@@ -26,13 +26,13 @@ Godot khởi chạy từ cảnh mở đầu và tự khôi phục checkpoint đ�
 - **H** — gợi ý mạch điện sau vài lần thử.
 - **A / B** — chọn cách xử lý bài đăng ở cảnh 10.
 - **X** — xin dừng thử thách cờ vua; E rời bàn hoặc R chơi lại.
-- **Esc** — thả chuột khỏi góc nhìn 3D.
+- **Esc** — thoát.
 
 ## Nội dung
 
 Các scene 01–04 mở đầu bằng lá thư, lớp học, thử thách trốn trong ba giây và chiếc gương. Scenes 05–08 điều tra bảng tin, tủ A-17, nhật ký sáu mảnh, mạch điện 4×4, bảo vệ tuần tra và cuộc truy đuổi. Scenes 09–11 giải mã máy tính, khôi phục camera, cân nhắc lời đồn và ghép chứng cứ. Scenes 12–15 trả lại sáu kỷ vật, đấu một thế cờ chiếu hết hợp lệ, đối diện buổi sáng và mở một trong hai kết thúc.
 
-GameState lưu inventory, flags, chứng cứ, lựa chọn và checkpoint. Luật cờ vua thuần GDScript, không dùng engine bên ngoài. Audio ambience và SFX được tổng hợp riêng cho dự án; các cảnh mở đầu 01–04 dùng model 3D Blender và texture tạo riêng cho dự án, các phần còn lại dùng hình vẽ bằng mã nguồn. Không có tài nguyên bên thứ ba trong bản hiện tại.
+GameState lưu inventory, flags, chứng cứ, lựa chọn và checkpoint. Luật cờ vua thuần GDScript, không dùng engine bên ngoài. Audio ambience và SFX được tổng hợp riêng cho dự án. **Visual Production đang diễn ra:** các không gian mở đầu, nhà vệ sinh, phòng máy và câu lạc bộ cờ đã có mô hình 3D Godot/GLB gốc, còn nhiều cảnh và hiệu ứng vẫn là 2D. Xem [tiến độ đồ họa](docs/VISUAL_PROGRESS.md) và [bằng chứng runtime](docs/VISUAL_QA.md); các ảnh concept không nằm trong gameplay.
 
 ## Kiểm tra
 

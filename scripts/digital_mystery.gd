@@ -1,6 +1,7 @@
 extends Node2D
 
 const VIEW := Vector2(960, 540)
+const LAB_SCENE: PackedScene = preload("res://scenes/visual/computer_lab_3d.tscn")
 const CAMERA_ORDER := [0, 1, 2]
 const VALID_PAIRS := [Vector2i(0, 2), Vector2i(1, 3), Vector2i(4, 5)]
 const CONCLUSIONS := [
@@ -28,14 +29,21 @@ var objective: Label
 var instructions: Label
 var status: Label
 var keys_label: Label
+var key_panel: ColorRect
+var lab_visual: SubViewportContainer
+var computer_engaged := false
 
 func _ready() -> void:
 	AudioDirector.set_ambience("computer_room")
+	_setup_input()
 	_build_hud()
 	for item_id in ["math_test", "chess_medal", "knight_keychain"]:
 		if not GameState.inventory.has(item_id):
 			status.text = "Có vẻ em đang thiếu một kỷ vật từ hành lang trường học. Tiếp tục điều tra phần camera."
 	_restore_checkpoint()
+	lab_visual = LAB_SCENE.instantiate() as SubViewportContainer
+	lab_visual.show_behind_parent = true
+	add_child(lab_visual)
 	_show_beat()
 	if not GameState.inventory.has("math_test") or not GameState.inventory.has("chess_medal") or not GameState.inventory.has("knight_keychain"):
 		status.text = "Thiếu kỷ vật từ hành lang; hồ sơ điều tra vẫn mở nhưng tiến trình lưu chưa hoàn chỉnh."
@@ -62,11 +70,60 @@ func _restore_checkpoint() -> void:
 		_:
 			beat = Beat.COMPUTER
 
+func _setup_input() -> void:
+	var bindings := {
+		"move_left": [KEY_A, KEY_LEFT],
+		"move_right": [KEY_D, KEY_RIGHT],
+		"move_up": [KEY_W, KEY_UP],
+		"move_down": [KEY_S, KEY_DOWN],
+		"run": [KEY_SHIFT],
+	}
+	for action in bindings:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		for keycode in bindings[action]:
+			var key := InputEventKey.new()
+			key.keycode = keycode
+			InputMap.action_add_event(action, key)
+
+
+func _process(_delta: float) -> void:
+	if beat != Beat.COMPUTER or lab_visual == null or computer_engaged:
+		return
+	if lab_visual.call("near_main_computer"):
+		instructions.text = "E: dùng máy chủ · WASD di chuyển · Shift chạy · F đèn pin · Click kéo chuột"
+	else:
+		instructions.text = "WASD di chuyển · Shift chạy · F đèn pin · Click kéo chuột · tìm máy chủ bên phải"
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if beat == Beat.COMPUTER and lab_visual != null:
+		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and not computer_engaged:
+			lab_visual.call("orbit_mouse", event.relative)
+		elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not computer_engaged:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if event is not InputEventKey or not event.pressed or event.echo:
+		return
+	if event.keycode == KEY_ESCAPE:
+		if beat == Beat.COMPUTER and computer_engaged:
+			_set_computer_engaged(false)
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		return
+	if beat == Beat.COMPUTER and event.keycode == KEY_F and not computer_engaged and lab_visual != null:
+		lab_visual.call("toggle_flashlight")
 		return
 	match beat:
 		Beat.COMPUTER:
+			if event.keycode == KEY_E:
+				if computer_engaged:
+					_set_computer_engaged(false)
+				elif lab_visual != null and lab_visual.call("near_main_computer") and not lab_visual.call("is_interacting"):
+					lab_visual.call("play_interaction")
+					_set_computer_engaged(true)
+				return
+			if not computer_engaged:
+				return
 			if event.keycode >= KEY_0 and event.keycode <= KEY_9:
 				code_input += str(event.keycode - KEY_0)
 				code_input = code_input.substr(maxi(0, code_input.length() - 4))
@@ -78,6 +135,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if code_input == "1804":
 					GameState.set_evidence("computer_access", "1804")
 					beat = Beat.CAMERA
+					computer_engaged = false
 					GameState.set_checkpoint("scene_09", "camera_recovery")
 					_show_beat()
 				else:
@@ -176,6 +234,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_tree().change_scene_to_file("res://scenes/12_phong_cau_vua.tscn")
 	queue_redraw()
 
+
+func _set_computer_engaged(engaged: bool) -> void:
+	computer_engaged = engaged
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if lab_visual != null:
+		lab_visual.call("set_controls_enabled", not engaged)
+	key_panel.visible = engaged
+	keys_label.visible = engaged
+	if engaged:
+		instructions.text = "0–9 nhập mã · Backspace xóa · Enter xác nhận · E/Esc rời máy"
+		status.text = "Máy chủ yêu cầu ngày-tháng trên mặt sau ảnh của An."
+		keys_label.text = "MÃ TRUY CẬP  ·  " + ("____" if code_input.is_empty() else code_input.pad_zeros(4))
+	else:
+		status.text = "Rời máy chủ. Tiến lại gần màn hình sáng bên phải để truy cập lại."
+
 func _build_hud() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
@@ -196,6 +269,12 @@ func _build_hud() -> void:
 	status.add_theme_color_override("font_color", Color("#e4c58d"))
 	status.add_theme_font_size_override("font_size", 16)
 	layer.add_child(status)
+	key_panel = ColorRect.new()
+	key_panel.position = Vector2(316, 326)
+	key_panel.size = Vector2(328, 62)
+	key_panel.color = Color(0.035, 0.075, 0.08, 0.9)
+	key_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(key_panel)
 	keys_label = Label.new()
 	keys_label.position = Vector2(340, 234)
 	keys_label.size = Vector2(280, 58)
@@ -208,9 +287,9 @@ func _build_hud() -> void:
 func _show_beat() -> void:
 	match beat:
 		Beat.COMPUTER:
-			objective.text = "09 · MÁY TÍNH DUY NHẤT  —  Khôi phục camera bằng mã 1804"
-			instructions.text = "Gõ số · Backspace xóa · Enter xác nhận"
-			status.text = "Phòng máy tối om. Màn hình yêu cầu mã ngày-tháng trên mặt sau ảnh của An."
+			objective.text = "09 · MÁY TÍNH DUY NHẤT  —  Tìm máy chủ để khôi phục camera"
+			instructions.text = "WASD di chuyển · Shift chạy · F đèn pin · E dùng máy chủ"
+			status.text = "Phòng máy tối om. Màn hình sáng bên phải là máy chủ lưu bản ghi."
 			keys_label.text = "MÃ TRUY CẬP  ·  ____"
 		Beat.CAMERA:
 			objective.text = "09 · PHỤC HỒI CAMERA  —  Xếp clip theo thời gian"
@@ -232,11 +311,23 @@ func _show_beat() -> void:
 			instructions.text = "E: sang câu lạc bộ cờ vua (Sprint 05)"
 			status.text = "Sáu kỷ vật đã được ghi nhận."
 			keys_label.text = "HỒ SƠ ĐƯỢC LƯU"
+	key_panel.visible = beat == Beat.COMPUTER and computer_engaged
+	keys_label.visible = beat != Beat.COMPUTER or computer_engaged
+	keys_label.position = Vector2(340, 333) if beat == Beat.COMPUTER else Vector2(340, 234)
+	if lab_visual != null:
+		lab_visual.visible = true
+		lab_visual.call("set_beat", int(beat))
+		lab_visual.call("set_controls_enabled", beat == Beat.COMPUTER and not computer_engaged)
+		var lab_viewport := lab_visual.get_node_or_null("ComputerLabViewport") as SubViewport
+		if lab_viewport != null:
+			lab_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	queue_redraw()
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, VIEW), Color("#0f151a"))
-	draw_rect(Rect2(55, 74, 850, 360), Color("#2e3739"))
+	if beat == Beat.COMPUTER and lab_visual != null:
+		return
+	draw_rect(Rect2(Vector2.ZERO, VIEW), Color(0.03, 0.06, 0.07, 0.68))
+	draw_rect(Rect2(55, 74, 850, 360), Color(0.12, 0.16, 0.17, 0.96))
 	match beat:
 		Beat.COMPUTER: _draw_computer()
 		Beat.CAMERA: _draw_camera()

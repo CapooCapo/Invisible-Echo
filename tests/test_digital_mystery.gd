@@ -24,8 +24,24 @@ func _run() -> void:
 		return
 	root.add_child(level)
 	current_scene = level
+	await physics_frame
 	await process_frame
 	_check(level.beat == level.Beat.COMPUTER, "scene 09 starts at the locked computer")
+	var lab: Node = level.lab_visual
+	var actor: CharacterBody3D = null
+	if lab != null:
+		actor = lab.get("actor") as CharacterBody3D
+	_check(actor != null, "scene 09 includes Hoang's physical lab player")
+	if actor == null:
+		_finish()
+		return
+	# This harness tests the investigation after entering the terminal. The
+	# separate lab-spatial harness verifies the walkable route to this point.
+	actor.call("teleport_to", Vector3(0.80, 0, 2.45))
+	await physics_frame
+	_check(bool(lab.call("near_main_computer")), "main CRT is reachable from the central aisle")
+	_press(KEY_E)
+	_check(bool(level.get("computer_engaged")), "E at the CRT unlocks code entry")
 	for keycode in [KEY_1, KEY_2, KEY_3, KEY_4]: _press(keycode)
 	_press(KEY_ENTER)
 	_check(level.beat == level.Beat.COMPUTER, "wrong access code is rejected")
@@ -65,6 +81,9 @@ func _run() -> void:
 	_press(KEY_E)
 	_check(state.inventory.has("chess_club_sketch"), "deduction grants final keepsake once")
 	_check(state.inventory.size() == 3, "digital chapter grants exactly three unique keepsakes")
+	_finish()
+
+func _finish() -> void:
 	if failures == 0:
 		print("DIGITAL_MYSTERY_PASS checks=%d" % checks)
 		quit()
