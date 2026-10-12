@@ -1,4 +1,4 @@
-# An — Tiếng Gáy Trong Đêm
+# An — Âm Vọng Vô Hình
 
 Game kinh dị học đường Việt Nam, viết bằng GDScript cho Godot 4.7.2. Đêm thứ nhất có 15 cảnh tương tác, sáu kỷ vật, các câu đố, stealth/chase, thử thách cờ vua, lựa chọn có hệ quả, hai kết thúc và cờ mở khóa Đêm thứ hai. Trạng thái hiện tại là **HUMAN_PLAYTEST_REQUIRED**, chưa phải RELEASE_READY.
 
