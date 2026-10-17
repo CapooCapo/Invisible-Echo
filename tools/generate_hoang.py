@@ -30,21 +30,28 @@ def material(name, color, roughness=0.9):
     return mat
 
 
-shirt = material("M_Hoang_Shirt_White", (0.72, 0.73, 0.75))
-shirt_edge = material("M_Hoang_Shirt_Shadow", (0.56, 0.59, 0.64))
-shirt_fold = material("M_Hoang_Shirt_Folds", (0.64, 0.66, 0.70))
+shirt = material("M_Hoang_Uniform_Navy", (0.045, 0.070, 0.135))
+shirt_edge = material("M_Hoang_Uniform_Navy_Edge", (0.075, 0.105, 0.19))
+shirt_fold = material("M_Hoang_Uniform_Navy_Folds", (0.028, 0.046, 0.095))
+uniform_collar = material("M_Hoang_Uniform_Collar", (0.68, 0.71, 0.76))
 trousers = material("M_Hoang_Trousers_Navy", (0.025, 0.036, 0.070))
 trouser_fold = material("M_Hoang_Trousers_Fold", (0.014, 0.022, 0.046))
-skin = material("M_Hoang_Skin", (0.53, 0.355, 0.265))
-skin_shadow = material("M_Hoang_Skin_Shadow", (0.39, 0.245, 0.185))
+skin = material("M_Hoang_Skin", (0.58, 0.39, 0.30))
+skin_shadow = material("M_Hoang_Skin_Shadow", (0.42, 0.27, 0.21))
 hair = material("M_Hoang_Hair_Black", (0.002, 0.0025, 0.0035))
-hair_alt = material("M_Hoang_Hair_Facet", (0.006, 0.007, 0.009))
-bag = material("M_Hoang_Backpack_Black", (0.012, 0.014, 0.018))
-bag_fold = material("M_Hoang_Backpack_Trim", (0.035, 0.039, 0.045))
-shoe = material("M_Hoang_Sneaker_White", (0.76, 0.76, 0.74))
+hair_alt = material("M_Hoang_Hair_Facet", (0.003, 0.0035, 0.0045))
+bag = material("M_Hoang_Backpack_Light_Gray", (0.59, 0.62, 0.67))
+bag_fold = material("M_Hoang_Backpack_Gray_Trim", (0.40, 0.44, 0.50))
+shoe = material("M_Hoang_Sneaker_White", (0.82, 0.82, 0.80))
 sole = material("M_Hoang_Sneaker_Sole", (0.53, 0.53, 0.51))
-eye = material("M_Hoang_Eyes", (0.022, 0.022, 0.026))
+eye = material("M_Hoang_Eyes", (0.004, 0.004, 0.005))
+eye_white = material("M_Hoang_Eye_White", (0.78, 0.70, 0.63))
 lip = material("M_Hoang_Lips", (0.28, 0.14, 0.125))
+for hair_mat in (hair, hair_alt):
+    hair_bsdf = hair_mat.node_tree.nodes.get("Principled BSDF")
+    if "Specular IOR Level" in hair_bsdf.inputs:
+        hair_bsdf.inputs["Specular IOR Level"].default_value = 0.03
+    hair_bsdf.inputs["Roughness"].default_value = 1.0
 
 
 def mesh(name, verts, faces, mat, bone):
@@ -119,8 +126,8 @@ def ico(name, center, radius, mat, bone, subdivisions=1):
 
 # The visual vocabulary is angular and economical, but it is a clothed human,
 # not a collection of boxes. Front is negative Y; floor is Z=0; height 1.8 m.
-loft("Untucked_school_shirt", [(0,0,.905,.345,.245),(-.012,0,1.00,.347,.235),
-     (0,0,1.16,.326,.226),(0,0,1.34,.38,.25),(0,0,1.415,.31,.225)], shirt,"spine")
+loft("Untucked_school_shirt", [(0,0,.905,.30,.22),(-.012,0,1.00,.305,.215),
+     (0,0,1.16,.29,.205),(0,0,1.34,.315,.22),(0,0,1.415,.28,.20)], shirt,"spine")
 facet("Hem_front_left", [(-.172,-.124,.91),(-.006,-.128,.90),(-.015,-.129,.943)],shirt_fold,"spine")
 facet("Hem_front_right", [(.007,-.129,.90),(.17,-.124,.91),(.022,-.128,.943)],shirt_fold,"spine")
 facet("Fold_left_waist", [(-.164,-.119,1.01),(-.108,-.124,1.105),(-.101,-.125,.962)],shirt_fold,"spine")
@@ -130,7 +137,7 @@ for z in (1.01,1.115,1.22,1.325):
     ico("Shirt_button", (0,-.143,z), .0055, bag_fold, "spine")
 for side, sign in (("L",-1),("R",1)):
     facet(side+"_collar", [(sign*.012,-.114,1.444),(sign*.133,-.113,1.409),
-          (sign*.046,-.159,1.337),(sign*.012,-.161,1.412)],shirt,"spine")
+          (sign*.046,-.159,1.337),(sign*.012,-.161,1.412)],uniform_collar,"spine")
     facet(side+"_collar_underside", [(sign*.046,-.16,1.337),(sign*.133,-.114,1.407),
           (sign*.11,-.134,1.348)],shirt_edge,"spine")
 facet("Chest_pocket",[(.085,-.131,1.305),(.174,-.119,1.305),
@@ -153,22 +160,43 @@ for side, sign in (("L",-1),("R",1)):
     loft(side+"_sneaker",[(x,-.083,.038,.158,.278),(x,-.084,.079,.158,.276),
          (x,-.025,.128,.139,.147)],shoe,side+"_foot")
     facet(side+"_shoe_vamp",[(x-.055,-.207,.082),(x+.055,-.207,.082),
-          (x+.048,-.103,.122),(x-.048,-.103,.122)],shirt_edge,side+"_foot")
+          (x+.048,-.103,.122),(x-.048,-.103,.122)],shoe,side+"_foot")
     for y in (-.174,-.146,-.118):
         facet(side+"_lace",[(x-.036,y,.124),(x+.036,y+.009,.124),
               (x+.036,y+.017,.128),(x-.036,y+.008,.128)],shoe,side+"_foot")
 
     sx=sign*.239
-    loft(side+"_shirt_sleeve",[(sign*.258,0,1.193,.16,.17),
-         (sign*.251,0,1.26,.17,.185),(sign*.214,0,1.405,.173,.205)],shirt,side+"_upper_arm")
-    loft(side+"_sleeve_hem",[(sign*.258,0,1.184,.16,.17),
-         (sign*.258,0,1.198,.161,.171)],shirt_fold,side+"_upper_arm")
-    loft(side+"_forearm",[(sign*.292,0,.895,.077,.077),
-         (sign*.294,0,1.04,.091,.093),(sign*.262,0,1.18,.105,.105)],skin,side+"_forearm")
-    loft(side+"_hand",[(sign*.292,-.003,.81,.067,.068),
-         (sign*.294,-.002,.87,.084,.079),(sign*.292,0,.91,.078,.078)],skin,side+"_hand")
-    loft(side+"_thumb",[(sign*.331,-.036,.848,.025,.026),
-         (sign*.339,-.026,.897,.028,.029)],skin,side+"_hand")
+    loft(side+"_shirt_sleeve",[(sign*.258,0,1.193,.112,.128),
+         (sign*.251,0,1.26,.12,.138),(sign*.214,0,1.405,.124,.15)],shirt,side+"_upper_arm")
+    loft(side+"_sleeve_hem",[(sign*.258,0,1.184,.113,.129),
+         (sign*.258,0,1.198,.114,.13)],shirt_fold,side+"_upper_arm")
+    if sign < 0:
+        # Reference pose: viewer-left arm bends inward and the hand grips the
+        # backpack strap on the chest. Front is -Y.
+        loft("L_upper_arm_skin",[(-.258,0,1.184,.105,.105),
+             (-.277,-.004,1.143,.094,.095),(-.292,-.004,1.105,.082,.082)],skin,"L_upper_arm")
+        loft("L_forearm",[(-.292,-.004,1.105,.082,.082),
+             (-.238,-.075,1.17,.088,.084),(-.157,-.157,1.255,.078,.078)],skin,"L_forearm")
+        # Palm overlaps the strap; thumb and two folded fingers visibly hook
+        # around it rather than floating in front of the chest.
+        loft("L_hand",[(-.15,-.19,1.214,.068,.05),
+             (-.143,-.205,1.245,.068,.054),(-.14,-.199,1.274,.058,.05)],skin,"L_hand")
+        # Thumb opposes the fingers across the webbing; the fingers are short,
+        # distinct curled segments, not a closed fist silhouette.
+        loft("L_thumb",[(-.098,-.218,1.27,.021,.024),
+             (-.119,-.24,1.258,.022,.025),(-.145,-.241,1.25,.021,.024)],skin,"L_hand")
+        for finger, z in enumerate((1.223, 1.24, 1.257)):
+            loft("L_gripping_finger_%d" % finger,
+                 [(-.177,-.224,z,.017,.019),(-.159,-.242,z+.004,.018,.020),
+                  (-.128,-.24,z+.002,.016,.019)],skin,"L_hand")
+    else:
+        # The opposite arm hangs naturally at his side.
+        loft(side+"_forearm",[(sign*.292,0,.895,.077,.077),
+             (sign*.294,0,1.04,.091,.093),(sign*.262,0,1.18,.105,.105)],skin,side+"_forearm")
+        loft(side+"_hand",[(sign*.292,-.003,.81,.067,.068),
+             (sign*.294,-.002,.87,.084,.079),(sign*.292,0,.91,.078,.078)],skin,side+"_hand")
+        loft(side+"_thumb",[(sign*.331,-.036,.848,.025,.026),
+             (sign*.339,-.026,.897,.028,.029)],skin,side+"_hand")
 
 loft("Neck",[(0,0,1.404,.13,.125),(0,0,1.505,.126,.121)],skin,"head")
 loft("Face_jaw",[(0,-.018,1.51,.116,.131),(0,-.018,1.54,.167,.162),
@@ -177,43 +205,59 @@ loft("Face_jaw",[(0,-.018,1.51,.116,.131),(0,-.018,1.54,.167,.162),
 facet("Nose_bridge",[(-.014,-.119,1.648),(.014,-.119,1.648),
       (.017,-.144,1.597),(-.017,-.144,1.597)],skin_shadow,"head")
 loft("Nose_tip",[(0,-.151,1.592,.031,.034),(0,-.14,1.611,.029,.031)],skin,"head")
-facet("Mouth",[(-.029,-.105,1.565),(.031,-.105,1.565),(.023,-.107,1.559),(-.022,-.107,1.559)],lip,"head")
+facet("Mouth",[(-.026,-.108,1.558),(0,-.111,1.567),(.027,-.108,1.558),
+      (.023,-.11,1.553),(0,-.113,1.562),(-.022,-.11,1.553)],lip,"head")
 for side, sign in (("L",-1),("R",1)):
-    facet(side+"_eye",[(sign*.036,-.133,1.658),(sign*.091,-.128,1.657),
-          (sign*.083,-.13,1.647),(sign*.043,-.134,1.648)],eye,"head")
-    facet(side+"_brow",[(sign*.034,-.133,1.684),(sign*.095,-.124,1.678),
-          (sign*.095,-.126,1.673),(sign*.034,-.135,1.679)],hair,"head")
+    cx = sign*.064
+    facet(side+"_open_sclera",[(cx-.027,-.128,1.66),(cx+.027,-.128,1.655),
+          (cx+.025,-.134,1.627),(cx-.025,-.134,1.632)],eye_white,"head")
+    # Low pupils inside an open eye shape give a clearly downward gaze.
+    facet(side+"_iris",[(cx-.012,-.14,1.645),(cx+.012,-.14,1.642),
+          (cx+.011,-.143,1.626),(cx-.011,-.143,1.629)],eye,"head")
+    facet(side+"_brow",[(sign*.034,-.133,1.681),(sign*.095,-.124,1.664),
+          (sign*.095,-.126,1.659),(sign*.034,-.135,1.674)],hair,"head")
     ico(side+"_ear",(sign*.128,.004,1.623),.026,skin,"head")
     facet(side+"_cheek_shadow",[(sign*.101,-.085,1.635),(sign*.115,-.065,1.59),
           (sign*.089,-.096,1.603)],skin_shadow,"head")
-cap=ico("Hair_mass",(0,.009,1.747),.145,hair,"head",2)
-cap.scale=(1.01,.92,.59)
+cap=ico("Hair_mass",(0,.009,1.747),.148,hair,"head",2)
+cap.scale=(1.08,.96,.69)
 for i in range(9):
     xx=-.115+i*.029
-    length=.004+(i*7%5)*.004
-    facet("Fringe_%02d"%i,[(xx-.023,-.127,1.75),(xx+.019,-.13,1.749),
-          (xx+.008,-.135,1.703-length),(xx-.013,-.134,1.722-length*.45)],
+    length=.012+(i*7%5)*.008
+    facet("Fringe_%02d"%i,[(xx-.025,-.127,1.753),(xx+.02,-.13,1.749),
+          (xx+.008,-.139,1.696-length),(xx-.014,-.136,1.72-length*.45)],
           hair_alt if i%3==0 else hair,"head")
 for i in range(6):
     xx=-.116+i*.047
     facet("Crown_facet_%02d"%i,[(xx-.027,-.074,1.776),(xx+.018,-.078,1.775),
           (xx+.028,-.044,1.805),(xx-.012,-.042,1.805)],
           hair_alt if i%3==0 else hair,"head")
+# Soft overlapping low-poly clumps build a full shaggy silhouette without
+# the sharp spike/helmet outline of separate triangular tufts.
+for i, (center, scale) in enumerate((
+        ((-.105,.018,1.775),(.62,.74,.62)),((-.055,.006,1.795),(.69,.72,.67)),
+        ((.005,.008,1.80),(.73,.72,.65)),((.065,.018,1.79),(.67,.72,.65)),
+        ((.112,.025,1.755),(.58,.70,.62)),((-.132,.01,1.69),(.53,.62,.78)),
+        ((.132,.01,1.69),(.53,.62,.78)))):
+    clump = ico("Shaggy_hair_clump_%02d" % i,center,.088,hair if i%3 else hair_alt,"head",2)
+    clump.scale = scale
 for side, sign in (("L",-1),("R",1)):
     facet(side+"_sideburn",[(sign*.123,-.058,1.735),(sign*.136,.002,1.738),
           (sign*.136,-.008,1.617),(sign*.112,-.061,1.655)],hair,"head")
 
-loft("Backpack_body",[(0,.205,.947,.267,.174),(0,.215,1.025,.32,.222),
-     (0,.213,1.257,.326,.218),(0,.19,1.388,.258,.182)],bag,"spine")
-loft("Backpack_front_pocket",[(0,.337,1.008,.25,.034),(0,.343,1.13,.264,.038)],bag_fold,"spine")
-facet("Backpack_zipper",[(-.12,.364,1.134),(.12,.364,1.134),
-      (.115,.363,1.126),(-.115,.363,1.126)],sole,"spine")
-loft("Backpack_top_handle",[(0,.183,1.366,.077,.038),(0,.18,1.425,.078,.037)],bag_fold,"spine")
+loft("Backpack_body",[(-.085,.22,.835,.32,.19),(-.09,.235,.94,.385,.235),
+     (-.09,.235,1.20,.39,.235),(-.075,.21,1.405,.31,.195)],bag,"spine")
+loft("Backpack_front_pocket",[(-.09,.354,1.00,.25,.04),(-.09,.365,1.10,.275,.045),
+     (-.09,.354,1.16,.24,.04)],bag_fold,"spine")
+facet("Backpack_zipper",[(-.22,.393,1.164),(.04,.393,1.164),
+      (.035,.392,1.154),(-.215,.392,1.154)],sole,"spine")
+loft("Backpack_top_handle",[(-.085,.187,1.38,.083,.04),(-.085,.182,1.445,.084,.04)],bag_fold,"spine")
 for side, sign in (("L",-1),("R",1)):
-    loft(side+"_backpack_strap",[(sign*.132,-.12,1.096,.044,.029),
-         (sign*.141,-.15,1.26,.049,.032),(sign*.137,-.111,1.407,.044,.031)],bag,"spine")
-    loft(side+"_strap_buckle",[(sign*.132,-.15,1.11,.048,.034),
-         (sign*.133,-.15,1.135,.048,.034)],bag_fold,"spine")
+    loft(side+"_backpack_strap",[(sign*.12,-.12,1.096,.032,.019),
+         (sign*.158,-.151,1.22,.034,.02),(sign*.145,-.145,1.31,.033,.019),
+         (sign*.125,-.111,1.407,.03,.018)],bag,"spine")
+    loft(side+"_strap_buckle",[(sign*.12,-.145,1.11,.033,.022),
+         (sign*.125,-.151,1.128,.033,.022)],bag_fold,"spine")
 
 
 # Armature: a compact humanoid rig. Rigid weighted pieces retain the intentional
@@ -239,9 +283,14 @@ bone("pelvis", (0,0,.84), (0,0,.98), "root")
 bone("spine", (0,0,.98), (0,0,1.43), "pelvis")
 bone("head", (0,0,1.43), (0,0,1.77), "spine")
 for side, sign in (("L",-1),("R",1)):
-    bone(side+"_upper_arm", (sign*.21,0,1.39), (sign*.275,0,1.16), "spine")
-    bone(side+"_forearm", (sign*.275,0,1.16), (sign*.28,0,.91), side+"_upper_arm")
-    bone(side+"_hand", (sign*.28,0,.91), (sign*.28,0,.82), side+"_forearm")
+    if sign < 0:
+        bone("L_upper_arm", (sign*.21,0,1.39), (-.292,-.004,1.105), "spine")
+        bone("L_forearm", (-.292,-.004,1.105), (-.145,-.193,1.22), "L_upper_arm")
+        bone("L_hand", (-.145,-.193,1.22), (-.139,-.20,1.28), "L_forearm")
+    else:
+        bone(side+"_upper_arm", (sign*.21,0,1.39), (sign*.275,0,1.16), "spine")
+        bone(side+"_forearm", (sign*.275,0,1.16), (sign*.28,0,.91), side+"_upper_arm")
+        bone(side+"_hand", (sign*.28,0,.91), (sign*.28,0,.82), side+"_forearm")
     bone(side+"_thigh", (sign*.105,0,.84), (sign*.105,0,.46), "pelvis")
     bone(side+"_shin", (sign*.105,0,.46), (sign*.105,0,.13), side+"_thigh")
     bone(side+"_foot", (sign*.105,0,.13), (sign*.105,-.18,.07), side+"_shin")
@@ -275,7 +324,7 @@ def anim(name, poses, count=32):
     for frame, angles in poses:
         for pb in arm.pose.bones:
             pb.rotation_mode = "XYZ"
-            xyz = angles.get(pb.name, (0,0,0))
+            xyz = angles.get(pb.name, neutral.get(pb.name, (0,0,0)))
             pb.rotation_euler = tuple(math.radians(v) for v in xyz)
             pb.keyframe_insert(data_path="rotation_euler", frame=frame, group=pb.name)
     arm.animation_data.action = None
@@ -287,17 +336,17 @@ def anim(name, poses, count=32):
     return action
 
 
-neutral = {}
-anim("Idle", [(1,neutral),(17,{"spine":(2,0,0),"head":(-2,0,0)}),(33,neutral)])
+neutral = {"spine":(4,0,0),"head":(18,0,0)}
+anim("Idle", [(1,neutral),(17,{"spine":(2,0,0),"head":(16,0,0)}),(33,neutral)])
 walk_a = {"L_thigh":(23,0,0),"R_thigh":(-23,0,0),"L_shin":(-8,0,0),
-          "R_shin":(16,0,0),"L_upper_arm":(-15,0,0),"R_upper_arm":(15,0,0)}
+          "R_shin":(16,0,0),"R_upper_arm":(15,0,0)}
 walk_b = {"L_thigh":(-23,0,0),"R_thigh":(23,0,0),"L_shin":(16,0,0),
-          "R_shin":(-8,0,0),"L_upper_arm":(15,0,0),"R_upper_arm":(-15,0,0)}
+          "R_shin":(-8,0,0),"R_upper_arm":(-15,0,0)}
 anim("Walk", [(1,walk_a),(17,walk_b),(33,walk_a)])
 run_a = {"L_thigh":(39,0,0),"R_thigh":(-39,0,0),"R_shin":(34,0,0),
-         "L_upper_arm":(-32,0,0),"R_upper_arm":(32,0,0),"spine":(9,0,0)}
+         "R_upper_arm":(32,0,0),"spine":(9,0,0)}
 run_b = {"L_thigh":(-39,0,0),"R_thigh":(39,0,0),"L_shin":(34,0,0),
-         "L_upper_arm":(32,0,0),"R_upper_arm":(-32,0,0),"spine":(9,0,0)}
+         "R_upper_arm":(-32,0,0),"spine":(9,0,0)}
 anim("Run", [(1,run_a),(13,run_b),(25,run_a)],24)
 anim("Turn_Left", [(1,neutral),(16,{"spine":(0,0,17),"head":(0,0,21)}),(33,neutral)])
 anim("Turn_Right", [(1,neutral),(16,{"spine":(0,0,-17),"head":(0,0,-21)}),(33,neutral)])
@@ -332,9 +381,19 @@ print("HOANG_EXPORT_OK", OUT / "hoang.glb")
 # A Blender render is evidence of the generated model, never a substitute for
 # an in-engine screenshot. Render after GLB/source export so preview lights are
 # not part of the game asset.
-preview_dir = ROOT / "docs" / "qa" / "blender_previews"
+# The still uses a reference-matching three-quarter, withdrawn pose only. These
+# preview transforms are intentionally applied after export and do not affect
+# the gameplay rig or its animation clips.
+arm.rotation_euler.z = math.radians(7)
+arm.animation_data.use_nla = False
+for pose_bone in arm.pose.bones:
+    pose_bone.rotation_mode = "XYZ"
+    pose_bone.rotation_euler = (0, 0, 0)
+arm.pose.bones["spine"].rotation_euler.x = math.radians(7)
+arm.pose.bones["head"].rotation_euler.x = math.radians(18)
+preview_dir = ROOT / "builds" / "visual-qa"
 preview_dir.mkdir(parents=True, exist_ok=True)
-bpy.ops.object.camera_add(location=(2.35, -4.5, 2.05))
+bpy.ops.object.camera_add(location=(-2.5, -4.5, 2.15))
 camera = bpy.context.object
 camera.rotation_euler = (Vector((0, 0, .89)) - camera.location).to_track_quat("-Z", "Y").to_euler()
 camera.data.type = "ORTHO"
@@ -342,7 +401,7 @@ camera.data.ortho_scale = 2.17
 bpy.context.scene.camera = camera
 for name, position, power, size in (
     ("Key", (1.3, -2.5, 3.4), 630, 3.0),
-    ("Fill", (-2.2, -1.1, 1.9), 310, 2.5),
+    ("Fill", (2.2, -1.1, 1.9), 310, 2.5),
     ("Rim", (0.4, 2.0, 2.9), 760, 2.0),
 ):
     bpy.ops.object.light_add(type="AREA", location=position)
@@ -362,6 +421,6 @@ scene.world.color = (.10, .11, .14)
 scene.render.resolution_x = 720
 scene.render.resolution_y = 960
 scene.render.resolution_percentage = 100
-scene.render.filepath = str(preview_dir / "hoang_model_preview_20261011.png")
+scene.render.filepath = str(preview_dir / "hoang_reference_match_preview.png")
 bpy.ops.render.render(write_still=True)
 print("HOANG_BLENDER_PREVIEW_OK", scene.render.filepath)

@@ -20,9 +20,14 @@ var ghost: Node3D
 var mirror_actor: Node3D
 var current_beat := -1
 var stall_glow: OmniLight3D
+var stall_interior_glow: OmniLight3D
 var threat_figures: Array[Node3D] = []
 var stall_doors: Array[StaticBody3D] = []
 var stall_door_open := false
+var stall_door_tween: Tween
+var stall_handle_tween: Tween
+var hide_state_active := false
+var visual_time := 0.0
 
 var tile: StandardMaterial3D
 var tile_dark: StandardMaterial3D
@@ -53,7 +58,26 @@ func _ready() -> void:
 	actor = CONTROLLER.new() as HoangController3D
 	world.add_child(actor)
 	actor.teleport_to(Vector3(-.8,0,2.0))
+	stall_interior_glow = _light("HideStallInteriorGuide", Vector3(-2.35,.95,2.05), Color("#b5c9bf"), .0, 1.65)
+	stall_interior_glow.visible = false
 	_make_threat_figures()
+
+
+func _process(delta: float) -> void:
+	# A restrained, readable pulse helps players find the hide space during the
+	# timed beat without adding UI or changing the prototype's story timing.
+	visual_time += delta
+	if stall_glow != null:
+		var active := current_beat == TOILET_BEAT
+		stall_glow.visible = active
+		if active:
+			var pulse := .5 + .5 * sin(visual_time * (2.0 if hide_state_active else 3.2))
+			stall_glow.light_energy = lerpf(.28, .62, pulse) if not hide_state_active else lerpf(.08, .22, pulse)
+	if stall_interior_glow != null:
+		var inside := current_beat == TOILET_BEAT and hide_state_active
+		stall_interior_glow.visible = inside
+		if inside:
+			stall_interior_glow.light_energy = .24 + .08 * (0.5 + 0.5 * sin(visual_time * 1.4))
 
 
 func _make_threat_figures() -> void:
@@ -421,14 +445,15 @@ func set_state_from_prototype(pos: Vector2, beat: int, hidden: bool) -> void:
 
 func update_story_state(beat: int, hidden: bool) -> void:
 	current_beat = beat
+	hide_state_active = hidden and beat == TOILET_BEAT
 	if actor != null:
-		actor.hidden = hidden and beat == TOILET_BEAT
+		actor.hidden = hide_state_active
 	if ghost != null:
 		ghost.visible = beat == REFLECTION_BEAT
 	for figure in threat_figures:
 		figure.visible = beat in [TOILET_BEAT, DEATH_BEAT]
 	if stall_glow != null:
-		stall_glow.visible = beat == 3
+		stall_glow.visible = beat == TOILET_BEAT
 
 
 func get_player_position() -> Vector3:
@@ -456,23 +481,46 @@ func open_hide_stall() -> void:
 	(first_door.get_child(0) as CollisionShape3D).set_deferred("disabled", true)
 	var mesh := world.get_node_or_null("StallDoor_0") as MeshInstance3D
 	if mesh != null:
-		mesh.position.z += 1.45
+		_animate_hide_door(mesh, 1.45)
 	var handle := world.get_node_or_null("StallHandle_0") as MeshInstance3D
 	if handle != null:
-		handle.position.z += 1.45
+		_animate_hide_handle(handle, 1.45)
 
 
 func reset_hide_stall() -> void:
 	if not stall_door_open or stall_doors.is_empty():
 		return
 	stall_door_open = false
-	(stall_doors[0].get_child(0) as CollisionShape3D).set_deferred("disabled", false)
 	var mesh := world.get_node_or_null("StallDoor_0") as MeshInstance3D
 	if mesh != null:
-		mesh.position.z -= 1.45
+		_animate_hide_door(mesh, 0.0)
 	var handle := world.get_node_or_null("StallHandle_0") as MeshInstance3D
 	if handle != null:
-		handle.position.z -= 1.45
+		_animate_hide_handle(handle, 0.0)
+	var collision := stall_doors[0].get_child(0) as CollisionShape3D
+	if collision != null and stall_door_tween != null:
+		stall_door_tween.tween_callback(func() -> void:
+			if not stall_door_open:
+				collision.set_deferred("disabled", false)
+		)
+
+
+func _animate_hide_door(mesh: MeshInstance3D, offset: float) -> void:
+	if stall_door_tween != null and stall_door_tween.is_valid():
+		stall_door_tween.kill()
+	stall_door_tween = create_tween()
+	stall_door_tween.set_trans(Tween.TRANS_CUBIC)
+	stall_door_tween.set_ease(Tween.EASE_OUT if offset > mesh.position.z - 2.15 else Tween.EASE_IN)
+	stall_door_tween.tween_property(mesh, "position:z", 2.15 + offset, .24)
+
+
+func _animate_hide_handle(handle: MeshInstance3D, offset: float) -> void:
+	if stall_handle_tween != null and stall_handle_tween.is_valid():
+		stall_handle_tween.kill()
+	stall_handle_tween = create_tween()
+	stall_handle_tween.set_trans(Tween.TRANS_CUBIC)
+	stall_handle_tween.set_ease(Tween.EASE_OUT if offset > handle.position.z - 1.67 else Tween.EASE_IN)
+	stall_handle_tween.tween_property(handle, "position:z", 1.67 + offset, .24)
 
 
 func near_mirror() -> bool:

@@ -2,13 +2,13 @@
 
 ## What is actually in the game
 
-This project started the visual pass as a **Node2D code-drawn game**. It now contains original rigged GLBs, procedural school textures, and real 3D Godot SubViewport rooms. Scenes 01 and 03–04 now use a `CharacterBody3D` for physical movement and proximity, with a spring-arm third-person camera, collisions, and a flashlight; the existing narrative, inventory, puzzle and checkpoint systems remain. This is a **scoped first playable**, not a conversion of all 15 scenes.
+This project started the visual pass as a **Node2D code-drawn game**. It now contains original rigged GLBs, procedural school textures, and real 3D Godot SubViewport rooms. Scenes 01 and 03–04 use a `CharacterBody3D` for first-person movement and proximity, collisions, and a flashlight; the player model is hidden in normal view and retained separately for reflections. Scene 01's letter pickup reveals “CỨU TÔI” in a supernatural red world wash. The existing narrative, inventory, puzzle and checkpoint systems remain. This is a **scoped first playable**, not a conversion of all 15 scenes.
 
 | Scene | Current visual status | Most important gap |
 |---|---|---|
-| 01 — Hallway letter | Physical 3D movement, letter pickup, door and third-person camera implemented | More environmental density and human camera/playability QA |
+| 01 — Hallway letter | First-person 3D movement, detailed letter pickup, staged red plea reveal and door implemented | Human camera/playability QA and further environmental density |
 | 02 — Classroom plea | Hallway 3D backdrop only | Distinct classroom set/cinematic |
-| 03 — Toilet hide | Physical stall entry and staged hide, with three bully GLBs as visual threats | Pursuit/door pounding animation and final fixture/lighting polish |
+| 03 — Toilet hide | First-person stall entry and staged hide, state-driven hide cue, with three bully GLBs as visual threats | Pursuit/door pounding animation and final fixture/lighting polish |
 | 04 — Mirror | Physical mirror proximity and a separate 3D viewport for An | Turn-around motion, exact apparition staging and visual polish |
 | 05 — Notice board | Existing 2D scene | 3D board/hallway presentation |
 | 06 — Diary | Existing 2D puzzle | 3D book/paper props; keep puzzle algorithm |

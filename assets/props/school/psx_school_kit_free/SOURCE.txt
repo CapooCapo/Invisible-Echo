@@ -1,0 +1,16 @@
+PSX School Kit Free — curated source record
+
+Author: heyheythere
+Version: 1.0.3
+Official source: https://heyheythere.itch.io/psx-school-kit-free
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License text: LICENSE.txt (copied from the source archive)
+Required credit: PSX School Kit Free by heyheythere - https://heyheythere.itch.io/psx-school-kit-free - CC BY 4.0
+
+Curated files retained from the pack:
+- glb/ceiling_light.glb — ceiling light fixture
+- textures/atlas.png — the GLB's referenced texture atlas (relative URI: ../textures/atlas.png)
+- textures/class_paint.png — classroom wall paint texture
+- textures/class_dado.png — architectural base-band texture
+
+No other models or pack files are included. The source listing describes 15 modular PS1-style school pieces, metre-scale units, and 128 px/m seamless wall/floor/ceiling textures. Only the files listed above are used in this project.

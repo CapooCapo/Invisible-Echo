@@ -10,6 +10,10 @@ func _initialize() -> void:
 func _run() -> void:
 	var chess = ChessRules.new()
 	_check(chess.all_legal_moves().size() == 20, "standard opening generates 20 legal white moves")
+	chess.halfmove_clock = 37
+	var clock_probe_moves := chess.all_legal_moves()
+	_check(clock_probe_moves.size() == 20, "nonzero halfmove clock does not change standard opening legal-move count")
+	_check(chess.halfmove_clock == 37, "legal move generation restores the preexisting halfmove clock after simulation")
 	var e2 := chess.square_from_name("e2")
 	var e4 := chess.square_from_name("e4")
 	_check(chess.make_move(e2, e4), "e2-e4 is a legal pawn double-step")

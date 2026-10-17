@@ -29,6 +29,11 @@ func _run() -> void:
 	current_scene = game
 	await physics_frame
 	await process_frame
+	for i in 3:
+		game.call("_advance_opening_sequence")
+	_check(hallway_external_camera_is_active(game), "opening uses an external establishing camera")
+	for i in 2:
+		game.call("_advance_opening_sequence")
 
 	var hall: Node = game.hallway_visual
 	var actor := hall.get("actor") as CharacterBody3D
@@ -42,8 +47,8 @@ func _run() -> void:
 		"player camera is mounted on a SpringArm3D")
 	_check(_hallway_is_narrow_and_enclosed(hall),
 		"hallway is a narrow, physically enclosed corridor rather than an open-sided walkway")
-	_check(_hallway_starts_dark(hall),
-		"hallway starts in a dark, low-ambient-light state")
+	_check(_hallway_has_warm_evening_lighting(hall),
+		"hallway has warm, non-red sunset lighting")
 	var animation_player := actor.get("animation_player") as AnimationPlayer
 	_check(animation_player != null, "imported Hoang rig has an AnimationPlayer")
 	if animation_player != null:
@@ -58,9 +63,10 @@ func _run() -> void:
 		await create_timer(2.1).timeout
 		_check(animation_player.is_playing() and animation_player.current_animation.ends_with("Idle"),
 			"Idle remains animated after two seconds")
-	var camera := actor.get_node_or_null("CameraPivot/CameraSpringArm/OverShoulderCamera") as Camera3D
-	_check(camera != null and camera.current, "over-shoulder Camera3D is active")
-	var light := actor.get_node_or_null("CameraPivot/CameraSpringArm/OverShoulderCamera/Flashlight") as SpotLight3D
+	var camera := actor.get_node_or_null("CameraPivot/CameraSpringArm/GameplayCamera") as Camera3D
+	_check(camera != null and camera.current and _camera_is_first_person(actor),
+		"first-person gameplay camera is active after controls return")
+	var light := actor.get_node_or_null("CameraPivot/CameraSpringArm/GameplayCamera/Flashlight") as SpotLight3D
 	_check(light != null and not light.visible, "flashlight starts off")
 	_press_key(KEY_F)
 	_check(light != null and light.visible, "F turns on the real 3D spotlight")
@@ -78,112 +84,120 @@ func _run() -> void:
 		print("REAL_3D_NOTE headless_pointer_capture_unavailable")
 		hall.call("orbit_mouse", mouse.relative)
 	_check(absf(float(actor.get("camera_yaw")) - yaw_before) > 0.1,
-		"captured mouse motion orbits the shoulder camera")
+		"captured mouse motion orbits the first-person view")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	actor.set("camera_yaw", 0.0)
 	actor.call("_apply_camera_rotation")
 
 	# The classroom wall must stop motion; then restore a safe start for the
-	# unwarped narrative route below.
+	# manual letter approach.
 	await _drive("move_right", 0.9, true)
 	_check(actor.position.x < 3.0 and actor.position.x > 1.0,
 		"CharacterBody3D moves and collides with the hallway wall")
-	actor.call("teleport_to", Vector3(0, 0, 3.25))
-	await physics_frame
-	await _drive("move_up", 0.75, false)
-	_check(bool(hall.call("near_letter")), "walking reaches the letter in world space")
-	_press_key(KEY_E)
-	_check(game.beat == game.Beat.LETTER, "letter interaction advances the story")
-	_check(_letter_reveal_has_both_red_wall_messages(hall),
-		"picking the letter abruptly reveals blood-red CỨU TÔI on both hallway walls")
-	_check(_hallway_world_is_blood_red(hall),
-		"letter pickup turns the hallway world blood-red")
-	_check(await _camera_shakes_during_reveal(actor),
-		"letter reveal shakes the first-person camera through projection offsets")
-	# The camera snaps into the eye position immediately, but its pivot takes
-	# 0.42s to recenter. Assert the stable end state rather than the tween start.
-	await create_timer(0.46).timeout
-	_check(_camera_is_first_person(actor),
-		"letter reveal completes its transition to the first-person camera end state")
-	_check(bool(hall.call("is_interacting")) and animation_player.current_animation.ends_with("Interact"),
-		"letter E plays the rigged Interact animation")
-	_check(not game.panel.visible, "letter panel waits for Hoang's pickup animation")
-	await create_timer(0.72).timeout
-	_check(game.panel.visible and not bool(hall.call("is_interacting")),
-		"letter panel opens after the interaction stage")
-	_press_key(KEY_E)
-	_check(game.beat == game.Beat.CLASSROOM, "letter closes to the classroom beat")
-	_press_key(KEY_E)
-	_check(bool(game.classroom_read), "classroom text can be closed before moving")
 	Input.action_press("run")
 	Input.action_press("move_up")
 	for i in 128:
 		await physics_frame
-	if animation_player != null:
-		_check(animation_player.is_playing() and animation_player.current_animation.ends_with("Run"),
-			"Run remains animated after more than two seconds of movement")
+	_check(animation_player.is_playing() and animation_player.current_animation.ends_with("Run"),
+		"Run remains animated during first-person hallway movement")
 	Input.action_release("move_up")
 	Input.action_release("run")
+	var letter := hall.get("letter") as Node3D
+	actor.call("teleport_to", letter.position + Vector3(0, 0, .7))
 	await physics_frame
-	_check(bool(hall.call("near_restroom_door")), "running reaches the restroom door")
-	_check(not bool(hall.get("restroom_door_open")), "restroom door starts closed")
+	_check(bool(hall.call("near_letter")), "walking reaches the letter in world space")
 	_press_key(KEY_E)
-	_check(bool(hall.get("restroom_door_open")), "E opens the physical restroom door")
-	_check(bool(hall.call("is_interacting")) and animation_player.current_animation.ends_with("Interact"),
-		"door E plays Interact before traversal")
-	await physics_frame
-	var door_shape := hall.get_node_or_null("SpatialViewport/SchoolHallway/RestroomDoorCollision/DoorCollisionShape") as CollisionShape3D
-	_check(door_shape != null and door_shape.disabled, "opened door disables blocking collision")
-	await create_timer(0.7).timeout
-	await _drive("move_up", 0.65, true)
-	_check(game.beat == game.Beat.TOILET and game.active_room == "restroom",
-		"walking through the threshold enters the restroom checkpoint")
-	_check(state.scene_id == "scene_03", "restroom checkpoint is recorded")
+	_check(str(game.get("opening_phase")) == "scene01_letter_inspect"
+		and game.get("opening_letter_contents").text == "CỨU TÔI",
+		"E opens only the short letter-front message")
+	_check(_count_red_reveal_labels(hall) == 0,
+		"pickup does not add red wall text or transition the corridor")
+	await create_timer(.6).timeout
+	_press_key(KEY_ESCAPE)
+	_check(game.get("opening_speaker").text == "Hoàng"
+		and game.get("opening_subtitle").text == "Lần sau viết SOS nhé.",
+		"Esc closes the letter and shows Hoang's exact SOS remark")
+	_press_key(KEY_E)
+	for i in 4:
+		_press_key(KEY_E)
+	_press_key(KEY_E)
+	await create_timer(.8).timeout
+	game.call("_process_opening_sequence", 1.0)
+	game.call("_process_opening_sequence", .6)
+	game.call("_process_opening_sequence", 1.2)
+	game.call("_process_opening_sequence", 3.0)
+	await create_timer(1.05).timeout
+	_check(str(game.get("opening_phase")) == "classroom_establish", "Scene 01 transitions into Scene 02")
+	game.call("_process_opening_sequence", 3.0)
+	_check(game.classroom_visual.get("actor").get("controls_enabled") == false,
+		"classroom player controls remain disabled during the cinematic")
+	# This suite focuses on physical controls and chapter traversal; the dialogue
+	# contract is covered by test_opening_cinematic.gd. Complete its authorized
+	# handoff through the production callback rather than simulating stale beats.
+	game.call("_complete_classroom_black_thought")
+	await process_frame
+	_check(game.beat == game.Beat.HALLWAY and str(state.scene_id) == "scene_02"
+		and str(state.checkpoint_id) == "afternoon_exit",
+		"classroom completion opens the after-school exit checkpoint")
+	_check(_camera_is_first_person(actor) and actor.controls_enabled,
+		"gameplay returns to first-person controls at the afternoon exit")
 
-	var room: Node = game.restroom_visual
-	var restroom_actor := room.get("actor") as CharacterBody3D
-	_check(restroom_actor != null and restroom_actor.controls_enabled,
-		"restroom has an enabled physical player")
-	_check(bool(room.call("near_stall_door")), "restroom spawn is near the first stall")
-	_press_key(KEY_E)
-	_check(bool(room.get("stall_door_open")), "E opens the first stall")
-	_check(bool(room.call("is_interacting")), "stall door E starts Interact staging")
-	await physics_frame
-	var stall_doors: Array = room.get("stall_doors")
-	var stall_shape := (stall_doors[0] as StaticBody3D).get_child(0) as CollisionShape3D
-	_check(stall_shape != null and stall_shape.disabled, "stall opening removes its physical obstruction")
-	await create_timer(0.7).timeout
-	await _drive("move_left", 0.34, true)
-	_check(bool(room.call("inside_hide_stall")), "movement reaches the actual stall interior")
-	_press_key(KEY_E)
-	_check(game.beat == game.Beat.TOILET and game.is_hidden,
-		"E inside the stall begins a visible hide stage")
-	_check(state.scene_id == "scene_04", "mirror checkpoint is recorded")
-	_check(bool(state.flags.get("survived_toilet_event", false)), "survival flag is saved at hide entry")
-	await physics_frame
-	var restroom_animation := restroom_actor.get("animation_player") as AnimationPlayer
-	_check(restroom_actor.hidden and room.visible and restroom_animation != null
-		and restroom_animation.current_animation.ends_with("Hide"),
-		"Hoang remains visible in the restroom while rigged Hide plays")
-	var frozen_hide_time: float = game.hide_time
-	_press_key(KEY_E)
-	_check(game.beat == game.Beat.TOILET and game.is_hidden,
-		"repeated E cannot skip hide staging")
-	await create_timer(0.75).timeout
-	_check(game.beat == game.Beat.TOILET and is_equal_approx(game.hide_time, frozen_hide_time),
-		"hide remains staged and the death countdown is frozen")
-	await create_timer(0.8).timeout
-	_check(game.beat == game.Beat.MIRROR and not game.is_hidden,
-		"mirror beat begins automatically after the hide animation stage")
+	actor.teleport_to(Vector3(0, 0, -12.45))
+	_check(bool(hall.call("near_restroom_door")), "the after-school exit is reachable")
+	game.call("_interact")
+	_check(bool(hall.get("restroom_door_open")) and bool(game.get("exit_transition_pending")),
+		"E opens the after-school exit")
+	actor.teleport_to(Vector3(0, 0, -13.8))
+	game.call("_process", .01)
+	await create_timer(.9).timeout
+	var night_school: Node = game.get("night_school_visual")
+	var night_actor := night_school.get("actor") as CharacterBody3D
+	_check(game.beat == game.Beat.NIGHT_SCHOOL and str(game.get("night_phase")) == "yard"
+		and str(state.checkpoint_id) == "night_school_yard",
+		"crossing the exit transitions into the night-school yard")
 
-	# Exit the stall, then approach the sink wall via collision-aware movement.
-	await _drive("move_right", 0.52, true)
-	await _drive("move_up", 1.55, true)
-	_check(bool(room.call("near_mirror")), "walking reaches the mirror in world space")
-	_press_key(KEY_E)
-	_check(game.beat == game.Beat.REFLECTION, "mirror interaction triggers the apparition")
-	var ghost := room.get("ghost") as Node3D
-	_check(ghost != null and ghost.visible, "An is visible only in the mirror viewport")
+	night_actor.teleport_to(Vector3(0, 0, -7.4))
+	game.call("_interact")
+	_check(str(game.get("night_phase")) == "ground_hall", "E enters the school from the yard")
+	night_actor.teleport_to(Vector3(-7, 0, -11.5))
+	game.call("_interact")
+	_check(str(game.get("night_phase")) == "stairs", "E enters the stairwell")
+	night_actor.teleport_to(Vector3(-7, 4.6, -24.3))
+	game.call("_process_night_school", .01)
+	night_school.call("_process", .01)
+	_check(str(game.get("night_phase")) == "upper_hall", "reaching floor three unlocks the upper corridor")
+	night_actor.teleport_to(Vector3(5, 4.8, -26))
+	_check(bool(night_school.call("near_restroom_door")), "the restroom door is reachable at the end of the corridor")
+	game.call("_interact")
+	_check(str(game.get("night_phase")) == "entering_restroom", "E opens the third-floor restroom door")
+	night_actor.teleport_to(Vector3(5, 4.8, -28.3))
+	game.call("_process_night_school", .01)
+	_check(str(night_school.get("story_zone")) == "restroom"
+		and str(game.get("night_phase")) == "friend_bao_line",
+		"crossing the restroom threshold enters the restroom sequence")
+	_check(str(state.checkpoint_id) == "restroom_approach" and str(state.story_time) == "23:00",
+		"restroom entry checkpoints the 23:00 route")
+
+	game.call("_interact")
+	game.call("_interact")
+	game.call("_interact")
+	game.call("_process_night_school", .5)
+	_check(str(game.get("night_phase")) == "warning_line", "the restroom threat warning is staged")
+	game.call("_interact")
+	_check(str(game.get("night_phase")) == "find_stall", "the warning releases player control to find a stall")
+	night_actor.teleport_to(Vector3(2.9, 4.8, -29.8))
+	_check(bool(night_school.call("near_stall_door")), "the restroom has a nearby hide-stall interaction")
+	game.call("_interact")
+	_check(bool(night_school.get("stall_open")), "E opens the restroom hide stall")
+	await physics_frame
+	var stall_blocker := night_school.get("stall_door_blocker") as CollisionShape3D
+	_check(stall_blocker != null and stall_blocker.disabled,
+		"opening the stall removes its physical obstruction")
+	night_actor.teleport_to(Vector3(3.7, 4.8, -32.8))
+	game.call("_interact")
+	_check(bool(night_school.get("player_hidden"))
+		and str(game.get("night_phase")) == "gang_arrival",
+		"E inside the stall starts the night-school hiding event")
 	_finish()
 
 
@@ -207,7 +221,7 @@ func _hallway_is_narrow_and_enclosed(hall: Node) -> bool:
 	return width <= 5.0 and wall_height >= 2.7
 
 
-func _hallway_starts_dark(hall: Node) -> bool:
+func _hallway_has_warm_evening_lighting(hall: Node) -> bool:
 	var world: Node3D = hall.get("world") as Node3D
 	if world == null:
 		return false
@@ -215,58 +229,39 @@ func _hallway_starts_dark(hall: Node) -> bool:
 	if world_env == null or world_env.environment == null:
 		return false
 	var env := world_env.environment
-	return env.ambient_light_energy <= 0.24 and _luminance(env.background_color) <= 0.035
-
-
-func _letter_reveal_has_both_red_wall_messages(hall: Node) -> bool:
-	var world: Node3D = hall.get("world") as Node3D
-	if world == null:
-		return false
-	var found := 0
-	for child in world.get_children():
-		if child is Label3D:
-			var label := child as Label3D
-			if label.text.strip_edges().to_upper() == "CỨU TÔI" and _is_blood_red(label.modulate):
-				found += 1
-	return found >= 2
-
-
-func _hallway_world_is_blood_red(hall: Node) -> bool:
-	var world: Node3D = hall.get("world") as Node3D
-	if world == null:
-		return false
-	var world_env := _find_world_environment(world)
-	if world_env == null or world_env.environment == null:
-		return false
-	var env := world_env.environment
-	return env.ambient_light_color.r >= env.ambient_light_color.g * 1.8 \
-		and env.ambient_light_color.r >= env.ambient_light_color.b * 1.8
+	var sunset := world.get_node_or_null("LateSunset") as DirectionalLight3D
+	return env.ambient_light_energy > 0.24 and sunset != null \
+		and sunset.light_color.r > sunset.light_color.g \
+		and sunset.light_energy > 0.0
 
 
 func _camera_is_first_person(actor: CharacterBody3D) -> bool:
 	var pivot := actor.get_node_or_null("CameraPivot") as Node3D
 	var spring_arm := actor.get_node_or_null("CameraPivot/CameraSpringArm") as SpringArm3D
-	var camera := actor.get_node_or_null("CameraPivot/CameraSpringArm/OverShoulderCamera") as Camera3D
+	var camera := actor.get_node_or_null("CameraPivot/CameraSpringArm/GameplayCamera") as Camera3D
 	if pivot == null or spring_arm == null or camera == null:
 		return false
-	var at_eye_position := camera.global_position.distance_to(actor.global_position + Vector3.UP * 1.62) <= 0.12
-	return at_eye_position and is_zero_approx(spring_arm.spring_length) and is_equal_approx(pivot.position.y, 1.62)
+	var at_eye_position := camera.global_position.distance_to(actor.global_position + Vector3.UP * 1.42) <= 0.12
+	return at_eye_position and is_zero_approx(spring_arm.spring_length) and is_equal_approx(pivot.position.y, 1.42)
 
 
-func _camera_shakes_during_reveal(actor: CharacterBody3D) -> bool:
-	var camera := actor.get_node_or_null("CameraPivot/CameraSpringArm/OverShoulderCamera") as Camera3D
-	if camera == null:
-		return false
-	var previous := Vector2(camera.h_offset, camera.v_offset)
-	var peak_offset := previous.length()
-	var largest_step := 0.0
-	for i in 12:
-		await process_frame
-		var offset := Vector2(camera.h_offset, camera.v_offset)
-		peak_offset = maxf(peak_offset, offset.length())
-		largest_step = maxf(largest_step, offset.distance_to(previous))
-		previous = offset
-	return peak_offset >= 0.012 and largest_step >= 0.01
+
+func hallway_external_camera_is_active(game_node: Node) -> bool:
+	var hall: Node = game_node.get("hallway_visual")
+	var cinematic := hall.get("cinematic_camera") as Camera3D
+	var actor := hall.get("actor") as CharacterBody3D
+	return cinematic != null and cinematic.current and actor != null and not actor.camera.current
+
+
+func _count_red_reveal_labels(hall: Node) -> int:
+	var world: Node3D = hall.get("world") as Node3D
+	if world == null:
+		return 0
+	var found := 0
+	for child in world.get_children():
+		if child is Label3D and (child as Label3D).text.strip_edges().to_upper() == "CỨU TÔI":
+			found += 1
+	return found
 
 
 func _find_world_environment(node: Node) -> WorldEnvironment:

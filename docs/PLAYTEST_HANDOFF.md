@@ -17,7 +17,7 @@ cd /home/giahoang/dev/an-tieng-gay-trong-dem
 
 `tools/build_linux.sh` sẽ tạo lại đúng cặp executable + PCK này bằng template Godot 4.7.2 đã kiểm tra version. Bản ghép PCK cũ đã bị thay thế; không dùng artifact cũ để playtest.
 
-Giữ nguyên terminal/profile đó khi đóng rồi chạy lại để kiểm tra load checkpoint. Muốn thử nhánh mới hoặc choice khác, dùng một thư mục `AN_QA_HOME` mới. Game hiện vào thẳng scene 01 và tự khôi phục `user://`; chưa có menu New Game/Continue/Settings.
+Giữ nguyên terminal/profile đó khi đóng rồi chạy lại để kiểm tra load checkpoint. Muốn thử nhánh mới hoặc choice khác, dùng một thư mục `AN_QA_HOME` mới. Game hiện mở title menu: Continue chỉ bật khi save hợp lệ được nạp; New Game yêu cầu xác nhận nếu đã có save. Luồng này mới được review tĩnh, chưa runtime-verified. Settings chưa có. Dùng profile QA riêng và không thử New Game trên profile chứa save chính.
 
 Save chính hiện nằm ở `~/.local/share/godot/app_userdata/An Tiếng Gáy Trong Đêm/an_tieng_gay_trong_dem_save.json`. Bản sao QA có hậu tố `.pre-release-qa-20261011`; không xóa hoặc ghi đè hai file này trong buổi playtest.
 

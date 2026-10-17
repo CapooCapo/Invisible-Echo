@@ -727,6 +727,9 @@ size = Vector3(0.2, 0.005, 0.27)
 [sub_resource type="BoxMesh" id="BoxMesh_daqv0"]
 size = Vector3(0.2, 0.005, 0.27)
 
+[sub_resource type="BoxMesh" id="BoxMesh_NearEntranceWall"]
+size = Vector3(4.8, 3.3, 0.2)
+
 [node name="EditorPreview3D" type="Node3D" unique_id=2072079035]
 
 [node name="SchoolHallway" type="Node3D" parent="." unique_id=1762944584]
@@ -759,6 +762,11 @@ mesh = SubResource("BoxMesh_0yh14")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.39, 1.64, -3.6)
 material_override = SubResource("StandardMaterial3D_2tkv0")
 mesh = SubResource("BoxMesh_6r37b")
+
+[node name="NearEntranceWall" type="MeshInstance3D" parent="SchoolHallway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64, 6.42)
+material_override = SubResource("StandardMaterial3D_2tkv0")
+mesh = SubResource("BoxMesh_NearEntranceWall")
 
 [node name="Wall_DampBase_-1" type="MeshInstance3D" parent="SchoolHallway" unique_id=1728148132]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27, 0.42, -3.6)
@@ -1659,27 +1667,12 @@ material_override = SubResource("StandardMaterial3D_fcilf")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_8sbp1")
 
-[node name="RedExitGlow" type="OmniLight3D" parent="SchoolHallway" unique_id=302551013]
+[node name="StairwellWarmSpill" type="OmniLight3D" parent="SchoolHallway" unique_id=302551013]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 2.2, -12.7)
-light_color = Color(0.64705884, 0.13333334, 0.1764706, 1)
-light_energy = 1.12
+light_color = Color(0.7529412, 0.47058824, 0.27058825, 1)
+light_energy = 0.26
 shadow_enabled = true
 omni_range = 4.2
-
-[node name="FarExitLeft" type="MeshInstance3D" parent="SchoolHallway" unique_id=1564047016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 1.55, -13.38)
-material_override = SubResource("StandardMaterial3D_2fupd")
-mesh = SubResource("BoxMesh_m7c1i")
-
-[node name="FarExitRight" type="MeshInstance3D" parent="SchoolHallway" unique_id=1368425435]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05, 1.55, -13.38)
-material_override = SubResource("StandardMaterial3D_2fupd")
-mesh = SubResource("BoxMesh_4a0ef")
-
-[node name="FarExitLintel" type="MeshInstance3D" parent="SchoolHallway" unique_id=2125643063]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.92, -13.38)
-material_override = SubResource("StandardMaterial3D_2fupd")
-mesh = SubResource("BoxMesh_bur4b")
 
 [node name="ExitDoor" type="MeshInstance3D" parent="SchoolHallway" unique_id=847575005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.38, -13.27)
@@ -1688,7 +1681,7 @@ mesh = SubResource("BoxMesh_cgcho")
 
 [node name="ExitWindow" type="MeshInstance3D" parent="SchoolHallway" unique_id=1576379744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.96, -13.225)
-material_override = SubResource("StandardMaterial3D_fcilf")
+material_override = SubResource("StandardMaterial3D_x7424")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_j80md")
 

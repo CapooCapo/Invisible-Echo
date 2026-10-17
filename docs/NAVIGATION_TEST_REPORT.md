@@ -1,0 +1,58 @@
+# Navigation Test Report — Stair B to WC Nam
+
+**Date:** 2026-10-16
+**Production scene:** `res://scenes/01_hanh_lang.tscn`
+**Controller:** real production `CharacterBody3D`, moved by InputMap actions in the production scene. Story interactions use `InputEventKey(KEY_E)` press/release packets through `Input.parse_input_event()` and `Game._unhandled_input`; the project has no separate `interact` InputMap action. These are scripted QA inputs, not a live human GUI playthrough.
+
+## Current result
+
+The production route from the yard through Stair B, L2/L3 and the North Gallery into WC Nam passes with input-driven movement. The latest X11 rerun after the procedural sky change is saved at `builds/visual-qa/environment-recovery-20261016/production_route_after_procedural_sky.log`; it opens the WC door, crosses the threshold grounded, opens the first mapped stall, hides, advances the timed event and exits, then reaches the mirror trigger grounded. Pressing E at that trigger advances `mirror_search → mirror_ghost`; the apparition node is visible/in-tree and controls are disabled in the runtime. The earlier post-bench run remains at `production_route_after_bench_reposition.log`.
+
+After the hide-camera aim change, one rerun of the legacy harness failed at the WC exit because its helper hard-coded `move_right` as world +X after camera yaw had intentionally turned toward +X; that QA output was not retained, and the failure was a harness-axis assumption rather than a production collision verdict. The independent camera-relative full-route harness `builds/visual-qa/environment-recovery-20261016/production_route_camera_relative_controls.gd` then exited 0, traversing Stair B, entering the WC, opening/hiding/exiting the stall, returning to the east gallery, and reaching the grounded mirror trigger at `(17.16291,6.520944,2.021525)`; real E reached `mirror_ghost` with An visible in-tree. Its console trace is retained in `builds/visual-qa/environment-recovery-20261016/production_route_camera_relative_controls.log`.
+
+The prompt-visibility regression at `tests/test_production_wc_prompt_visibility_regression.gd` now verifies that “E · Mở cửa” is visible in the gameplay HUD at the measured WC approach, suppressed during an opening dialogue overlay, restored after dialogue, and returned to the dialogue column when a panel opens. A real KEY_E event still opens the production door. A staged X11 capture of the actual main scene shows the prompt at `builds/visual-qa/environment-recovery-20261016/wc_prompt_hud_after_bench.png`; it is a UI/composition setup, not a navigation test.
+
+The real-E harness confirms the mirror event/state transition but cannot capture the headless viewport. This report does **not** claim the apparition is visually readable, full camera clearance, or visual acceptance passed. The floor 1/2/3/rooftop schematic plan images are accessible from the inbound conversation attachments and were reviewed, but a reproducible matched runtime overlay is not yet captured; the drawings do not establish exact room dimensions/elevations. The supplied Level-3 plan has no WC Nam, so that gameplay addition still lacks an approved plan amendment.
+
+## Input-driven route and interaction results
+
+| Check | Result | Evidence / limits |
+|---|---|---|
+| Stair B ascent to L2/L3 | **PASS — production route** | Fresh trace `builds/visual-qa/environment-recovery-20261016/production_route_after_bench_reposition.log`; reaches L2 `(-1.272022,3.305943,-25.42025)` and L3 `(1.184646,6.365849,-19.83574)`. |
+| L3 connector → North Gallery → east wing | **PASS — production route** | Fresh trace above; grounded traversal, local south-edge guard probe, and route remains clear after benches move to wall-side gaps. No cross-courtyard bridge. |
+| WC door / threshold | **PASS — real E + grounded traversal** | Fresh trace above sends KEY_E press/release through the production input handler; hinged leaf reaches `angle_y=1.571`, blocker disables, and Hoàng crosses grounded at approximately `(14.81791,6.520944,1.016525)`. |
+| First mapped stall entry | **PASS — real-E route** | Fresh trace uses a south-first aisle approach, then west through the opened first-stall leaf; reaches `(15.9904,6.520944,-1.551808)` grounded and `inside_stall()==true`. |
+| Hide, timed beat, exit to hallway | **PASS — real E + grounded route** | Fresh trace: actual KEY_E events through `Game._unhandled_input` open the stall, enter `gang_arrival` with hidden state, advance `bell_line → wait_exit → exit_hiding`, restore visibility/controls, and leave via grounded movement. |
+| WC “E · Mở cửa” prompt | **PASS — gameplay HUD regression** | `tests/test_production_wc_prompt_visibility_regression.gd`: actual Label is visible-in-tree at `(12.30543,6.520944,1.016525)`; the test also verifies opening-dialogue suppression, post-dialogue HUD restoration, panel reparenting, and real E opening. Current staged runtime frame: `builds/visual-qa/environment-recovery-20261016/wc_prompt_hud_after_bench.png`. |
+| Live mirror trigger approach | **PASS — approach only** | Latest full input-driven production rerun reaches `(17.16291,6.520944,2.021525)` grounded; `near_mirror()==true`, 0.043 m from trigger, phase `mirror_search`. Trace: `builds/visual-qa/environment-recovery-20261016/production_route_after_procedural_sky.log`. |
+| Mirror E interaction / apparition visual | **PASS — event state; camera pose captured; VISUAL UNVERIFIED** | Real KEY_E changes `mirror_search → mirror_ghost`; apparition node is visible/in-tree and controls disable. Production camera facing/orbit regression passes, and X11 staged-view capture `builds/visual-qa/environment-recovery-20261016/camera-qa-20261016/wc_mirror_apparition_looked_at.png` shows the aimed mirror composition. The screenshot is a staged camera endpoint, not a screenshot of the real-E route; full in-game apparition readability remains unverified. |
+| Sampled first-person camera clearance | **PASS AT SAMPLED POSES; full sweep NOT VERIFIED** | X11 production-camera QA checked 12 grounded endpoint poses with a 55 mm overlap probe; no camera-volume collision found. Staged samples are not continuous movement; between-pose clearance remains unverified. See `builds/visual-qa/environment-recovery-20261016/camera-qa-20261016/CAMERA_QA_REPORT.md`. |
+| Camera/event readability | **PARTIAL — scoped fixes captured and regression-tested** | First E aims at the runtime mirror center; second E re-aims at the glass before turning away. The focused regression includes a captured 400 px mouse orbit during dialogue and passes with facing dots 1.0000 then −0.9993. New X11 approach capture shows the lowered WC NAM sign clearly. The production sky now uses a dark procedural gradient and generated star cover; `camera-qa-20261016/level3_east_corridor.png` shows no bright disk or horizon band while preserving authored lighting. The hidden-state camera aims toward the stall opening; `camera-qa-20261016/hide_camera_auto_aim.png` shows WC context with a substantial partial partition in the lower foreground. No visual acceptance is claimed. |
+| Camera sweep through full route | **NOT VERIFIED** | No continuous camera-clearance sweep was performed between the 12 sampled endpoints. |
+| Visual review gate | **VISUAL_UNVERIFIED** | X11 camera QA captured actual production viewport endpoints. The close WC sign is readable, the dark procedural sky removes the glaring disk/horizon in the sampled east-corridor view, and the mirror reveal camera is corrected. The hide view still has a substantial partial partition foreground and the full slice lacks accepted visual comparison. Endpoint checks are not continuous play or full visual sign-off. The supplied Level-3 plan omits WC Nam and no amended plan has been approved. |
+
+### X11-backed route/capture attempt
+
+The first separate non-headless process initialized OpenGL 4.6 on Mesa/Intel and attempted the production route before capturing the live mirror. At `stair_b_level_3_east_edge_connector`, it recorded three ungrounded ticks; the first bad sample was `(0.506441,6.518,-20.08003)` with no floor contacts. It later reached `(0.420087,6.520942,-19.48024)` grounded, but the route's continuous level-3 support assertion had already failed. That run exited status 1 before the mirror event and produced no PNG. **Cause of the divergence is unknown.**
+
+A later instrumented run logged camera yaw `0.0` at the L3 waypoints (matching the headless run), completed the production route with real E, and captured the live mirror SubViewport; the screenshot is listed above and the run log is `production_route_camera_diag_x11_capture_20261015.log`. Thus one X11 run passed after one had failed; replay consistency is not established. A separate forced-yaw diagnostic exited before the mapped entry at `(9.866918,-0.399057,-15.5135)` and produced no image (`production_route_visual_capture_deterministic_20261015.log`). These failures and the later success are all retained; none are hidden or promoted to a camera-sweep/visual pass.
+
+### Stall approach diagnosis
+
+The earlier x-first approach contacted `WC NAM stall door pivot 02Body` and then `WC NAM shared cubicle partitionBody`, stopping outside the strict `inside_stall()` bounds at approximately `(16.22124,6.520944,-1.508359)`. This was an approach-order collision, not proof that the mapped hide point was inaccessible. Moving south to the aisle first, then west through the opened first leaf, succeeds. Do not interpret the failed x-first probe as a successful bypass of the closed second stall door.
+
+## Focused step-assist physics regression
+
+The isolated production-controller suite reports **25/25 assertions passed** across two physics margins, including accepted/rejected rise boundaries, a support gap, low-guard pit, open-edge fall, low ceiling, and ordinary ramp traversal. Six connected `0.18 m` risers were reached in order. This is **not** continuously grounded traversal: each riser transition had two airborne ticks at 60 Hz (~33 ms), then re-grounded on the next tread. Single-box fixtures also show brief airborne intervals.
+
+The Stair B south approach is a sloped `0.52 m` mesh (`(4.8,0.12,2.0)`, positioned `(0,-0.2,-17.2)`, X rotation `0.254368 rad`). Hoàng traversed it grounded as a ramp; this does **not** verify the step-assist limit on the user's separately described ground-floor obstacle. That obstacle could not be uniquely identified in the current scene, so production-specific knee-step behavior for it remains **NOT VERIFIED**.
+
+## Reproducibility artifacts
+
+Tester README, harnesses, and logs are preserved additively in:
+
+`builds/visual-qa/environment-recovery-20261015/latest-controller-route-20261015_01/`
+
+Start with its `README.md` for the 2026-10-15 baseline; fresh 2026-10-16 traces are `production_route_after_bench_reposition.log` and `production_route_after_procedural_sky.log`. Movement uses normal input actions; the real-E harness sends KEY_E press/release events through the production input path and does not teleport the actor. The separate prompt regression teleports only to isolate measured UI state and explicitly does not claim route navigation. An older `tests/test_production_stair_b_wc_route.gd` replay exited 1 at the mapped school entry (`x=-9.415028`) before Stair B; it remains a stale harness and is not the accepted route evidence.
+
+**Still outstanding:** GUI inspection of the live apparition; systematic camera sweep; visual review against actual approved references; FPS/draw-call measurement; identification and production test of the user-described ground-floor obstacle. No overall vertical-slice acceptance is claimed.

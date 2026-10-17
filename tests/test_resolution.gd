@@ -30,6 +30,9 @@ func _run() -> void:
 	await process_frame
 	_check(current_scene != null and current_scene.name == "ChessBoss", "complete return ritual enters chess boss")
 	var duel = current_scene
+	_check(duel.selecting_mode and duel.selected_mode_index == 0, "chess boss opens the three-mode selector with Story highlighted")
+	_press(duel, KEY_1)
+	_check(not duel.selecting_mode and duel.mode == duel.Mode.STORY, "Story mode can be selected before the legacy checkmate puzzle")
 	duel._activate_square(duel.chess.square_from_name("g6"))
 	duel._activate_square(duel.chess.square_from_name("g7"))
 	_check(duel.result == duel.Result.WON and state.flags.get("chess_boss_defeated"), "legal Qg7 move defeats the boss by checkmate")
@@ -59,14 +62,29 @@ func _run() -> void:
 	await process_frame
 	_check(state.ending == "ending_echo" and state.flags.get("night_2_unlocked"), "rumor or unfinished chess produces the second ending and still unlocks Night 2")
 
+	state.scene_id = "scene_13"
+	state.checkpoint_id = "chess_challenge"
 	var rules_scene = load("res://scenes/13_ban_co_boss.tscn").instantiate()
-	rules_scene._ready()
-	rules_scene._resign()
-	_check(rules_scene.result == rules_scene.Result.RESIGNED and state.flags.get("chess_resigned"), "chess boss supports explicit resignation")
+	root.add_child(rules_scene)
+	current_scene = rules_scene
+	await process_frame
+	_press(rules_scene, KEY_1)
+	_press(rules_scene, KEY_X)
+	_check(rules_scene.result == rules_scene.Result.RESIGNED and state.flags.get("chess_resigned") and state.checkpoint_id == "chess_resigned", "chess boss supports explicit resignation")
 	_press(rules_scene, KEY_R)
-	_check(rules_scene.result == rules_scene.Result.PLAYING and state.checkpoint_id == "chess_challenge" and not state.flags.get("chess_resigned"), "retry after resignation clears the saved resignation checkpoint")
-	rules_scene.free()
-
+	_check(rules_scene.result == rules_scene.Result.PLAYING and rules_scene.mode == rules_scene.Mode.STORY and rules_scene.chess.board.count("") == 61 and state.checkpoint_id == "chess_challenge" and not state.flags.get("chess_resigned"), "R retries the Story puzzle and clears the resignation checkpoint")
+	_press(rules_scene, KEY_X)
+	_press(rules_scene, KEY_E)
+	await process_frame
+	await process_frame
+	var routed_scene_name: String = str(current_scene.name) if current_scene != null else "<null>"
+	_check(current_scene != null and state.scene_id == "scene_15" and state.checkpoint_id == "ending", "E after Story resignation routes directly to the bad-ending checkpoint; root=%s" % routed_scene_name)
+	var ending_heading: Label = current_scene.get("heading") as Label if current_scene != null else null
+	var ending_story: Label = current_scene.get("story") as Label if current_scene != null else null
+	var ending_unlock: Label = current_scene.get("unlock") as Label if current_scene != null else null
+	_check(ending_heading != null and ending_heading.text == "BAD ENDING  ·  NGƯỜI ĐÃ QUAY LƯNG", "resignation ending has the distinct Bad Ending title")
+	_check(ending_story != null and ending_story.text.contains("Lần này... mình tưởng sẽ khác") and ending_story.text.contains("KÉÉÉÉT"), "resignation ending preserves An's story and the final stick sound")
+	_check(ending_unlock != null and ending_unlock.text.contains("ĐÊM THỨ HAI") and state.ending == "ending_echo" and state.flags.get("chess_resigned"), "Bad Ending records the expected ending state and Night 2 unlock")
 	if failures == 0:
 		print("RESOLUTION_PASS checks=%d" % checks)
 		quit()

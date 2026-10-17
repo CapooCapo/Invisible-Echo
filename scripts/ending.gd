@@ -9,14 +9,21 @@ func _ready() -> void:
 	GameState.set_checkpoint("scene_15", "ending")
 	var verified := str(GameState.choices.get("minh_post", "verify_warn")) == "verify_warn"
 	var chess_won := bool(GameState.flags.get("chess_boss_defeated", false))
-	var hopeful := verified and chess_won
+	var chess_resigned := bool(GameState.flags.get("chess_resigned", false))
+	var hopeful := verified and chess_won and not chess_resigned
 	GameState.ending = "ending_dawn" if hopeful else "ending_echo"
 	GameState.set_flag("night_2_unlocked")
-	heading.text = "KẾT THÚC  ·  %s" % ("BÌNH MINH" if hopeful else "DƯ ÂM")
-	if hopeful:
-		story.text = "Minh không đăng lời đồn; An không bị biến thành một lời giải dễ dãi. Ván cờ khép lại, nhưng câu hỏi về tiếng gõ trong đêm vẫn còn. Trước khi rời trường, An nghe thấy một tiếng gáy rất xa — không phải từ sân trường."
+	GameState.chapter = "night_1_complete"
+	if chess_resigned:
+		AudioDirector.play_sfx("night_stick_scrape")
+		heading.text = "BAD ENDING  ·  NGƯỜI ĐÃ QUAY LƯNG"
+		story.text = "Hoàng cúi đầu: “Xin lỗi. Mình không thể tiếp tục.” An nhìn những kỷ vật trên bàn. “Lần này... mình tưởng sẽ khác.” Đèn trong phòng tắt. Trong bóng tối, tiếng gậy sắt kéo lê vang lên: KÉÉÉÉT..."
 	else:
-		story.text = "Một lựa chọn vội vàng hoặc ván cờ còn dang dở khiến câu chuyện chưa thể yên. An và Minh rời trường cùng những điều đã biết — và những khoảng trống chưa thể lấp. Khi cánh cổng khép lại, tiếng gõ đáp lại từ bên kia."
+		heading.text = "KẾT THÚC  ·  %s" % ("BÌNH MINH" if hopeful else "DƯ ÂM")
+	if not chess_resigned and hopeful:
+		story.text = "07:10 — Hoàng tỉnh dậy trong lớp học. Nhóm các bạn vẫn nhớ đêm qua; quân vua đen khắc tên Trần Nhật Minh — lớp 11A2 vẫn ở trong túi Hoàng. Lựa chọn kiểm chứng đã hạn chế lời đồn: Minh không đăng lời đồn. Cậu đang đứng ngoài hành lang.\n\nTin nhắn: “Các cậu đã giúp được An. Nhưng còn người tiếp theo? 11 giờ tối. Phòng 11A2.”"
+	elif not chess_resigned:
+		story.text = "07:10 — Hoàng tỉnh dậy trong lớp học. Nhóm các bạn vẫn nhớ đêm qua; Hoàng vẫn giữ quân vua đen mang tên Trần Nhật Minh — lớp 11A2. lựa chọn vội vàng đăng nguyên văn khiến lời bôi nhọ lan rộng; Minh đang chờ ngoài hành lang.\n\nTin nhắn: “Các cậu đã giúp được An. Nhưng còn người tiếp theo? 11 giờ tối. Phòng 11A2.”"
 	unlock.text = "ĐÃ MỞ KHÓA  ·  ĐÊM THỨ HAI"
 	if GameState.persistence_enabled:
 		GameState.save_game()
@@ -32,13 +39,13 @@ func _build_ui() -> void:
 	heading.add_theme_font_size_override("font_size", 30)
 	layer.add_child(heading)
 	story = Label.new()
-	story.position = Vector2(142, 174)
-	story.size = Vector2(676, 190)
+	story.position = Vector2(142, 158)
+	story.size = Vector2(676, 224)
 	story.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	story.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	story.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	story.add_theme_color_override("font_color", Color("#ded7ca"))
-	story.add_theme_font_size_override("font_size", 21)
+	story.add_theme_font_size_override("font_size", 18)
 	layer.add_child(story)
 	unlock = Label.new()
 	unlock.position = Vector2(200, 412)

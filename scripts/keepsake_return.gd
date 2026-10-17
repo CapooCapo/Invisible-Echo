@@ -3,6 +3,14 @@ extends Node2D
 const CLUB_VISUAL: PackedScene = preload("res://scenes/visual/chess_club_3d.tscn")
 const ITEM_IDS := ["math_test", "chess_medal", "knight_keychain", "mother_photo", "minh_thanks", "chess_club_sketch"]
 const ITEM_NAMES := ["BÀI KIỂM TRA 100 ĐIỂM", "HUY CHƯƠNG CỜ VUA", "MÓC KHÓA QUÂN MÃ", "ẢNH CHỤP CÙNG MẸ", "LỜI CẢM ƠN CỦA MINH", "PHÁC THẢO CÂU LẠC BỘ"]
+const MEMORY_TEXTS := [
+	"hồi ức: An muốn khoe bài Toán 100 điểm với mẹ.",
+	"hồi ức: An nhận huy chương và muốn mở một câu lạc bộ cờ vua.",
+	"hồi ức: Chiếc móc khóa quân mã nhắc An về lời chỉ đường trong hành lang.",
+	"hồi ức: Tấm ảnh cùng mẹ và buổi đi chơi đã hứa với em gái.",
+	"hồi ức: Minh từng gửi lời cảm ơn An vì đã giúp cậu.",
+	"hồi ức: An phác thảo câu lạc bộ cờ vua cùng bạn bè.",
+]
 var selected := 0
 var placed: Array[bool] = [false, false, false, false, false, false]
 var club_visual: Node
@@ -38,7 +46,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif GameState.inventory.has(ITEM_IDS[selected]):
 			placed[selected] = true
 			GameState.set_flag("returned_" + ITEM_IDS[selected])
-			feedback = ""
+			GameState.set_evidence("keepsake_memory_" + ITEM_IDS[selected], MEMORY_TEXTS[selected])
+			feedback = MEMORY_TEXTS[selected]
 		else:
 			feedback = "Kỷ vật này chưa có trong hành trang. Hãy hoàn tất chương trước."
 	elif event.keycode == KEY_R:
@@ -78,13 +87,14 @@ func _build_ui() -> void:
 		layer.add_child(item)
 		item_labels.append(item)
 	status = Label.new()
-	status.position = Vector2(30, 451)
-	status.size = Vector2(900, 38)
+	status.position = Vector2(30, 445)
+	status.size = Vector2(900, 54)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status.add_theme_color_override("font_color", Color("#e2c58e"))
 	status.add_theme_font_size_override("font_size", 16)
 	layer.add_child(status)
 	instruction = Label.new()
-	instruction.position = Vector2(30, 499)
+	instruction.position = Vector2(30, 506)
 	instruction.add_theme_color_override("font_color", Color("#c7c0b4"))
 	instruction.add_theme_font_size_override("font_size", 15)
 	layer.add_child(instruction)
@@ -103,7 +113,7 @@ func _refresh() -> void:
 	if feedback != "":
 		status.text = feedback
 	elif placed[selected]:
-		status.text = "ĐÃ TRẢ VỀ — %s" % ITEM_NAMES[selected]
+		status.text = MEMORY_TEXTS[selected]
 	else:
 		status.text = "ĐANG CHỌN — %s  ·  Nhấn E để đặt lên bàn cờ" % ITEM_NAMES[selected]
 	instruction.text = "← / → chọn  ·  E đặt hoặc bắt đầu ván cờ khi đủ 6 món  ·  Tiến trình lưu tự động"

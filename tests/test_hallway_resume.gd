@@ -1,7 +1,7 @@
 extends SceneTree
 
-## The classroom checkpoint is still in the hallway, after the letter reveal.
-## Reloading it must preserve the visible reveal and first-person framing.
+## Reloading the current Scene 02 checkpoint must restore the classroom
+## message and its configured first-person gameplay rig.
 const MAIN_SCENE := "res://scenes/01_hanh_lang.tscn"
 
 var checks := 0
@@ -27,20 +27,21 @@ func _run() -> void:
 	await create_timer(0.46).timeout
 
 	var hall: Node = game.hallway_visual
-	var actor := hall.get("actor") as CharacterBody3D
-	var arm := actor.get_node("CameraPivot/CameraSpringArm") as SpringArm3D
-	var pivot := actor.get_node("CameraPivot") as Node3D
-	var labels: Array = hall.get("reveal_labels")
+	var classroom: Node = game.classroom_visual
+	var actor := classroom.get("actor") as CharacterBody3D
+	var arm := actor.get("spring_arm") as SpringArm3D
+	var pivot := actor.get("pivot") as Node3D
+	var message := classroom.get("desk_message") as Label3D
+	var cinematic_camera := classroom.get("cinematic_camera") as Camera3D
 	_check(game.beat == game.Beat.CLASSROOM and game.letter_found,
 		"scene_02 reload restores the classroom beat after the letter")
-	_check(not hall.get("letter").visible,
-		"scene_02 reload keeps the collected letter hidden")
-	_check(labels.size() == 2 and labels[0].visible and labels[1].visible,
-		"scene_02 reload preserves both red wall messages")
-	_check(hall.get("reveal_tint").visible,
-		"scene_02 reload preserves the blood-red world")
-	_check(is_zero_approx(arm.spring_length) and is_equal_approx(pivot.position.y, 1.62),
-		"scene_02 reload preserves the first-person camera")
+	_check(not hall.visible,
+		"scene_02 reload does not show the inactive hallway and its already-collected letter")
+	_check(classroom.visible and message != null and message.visible and message.text == "CỨU TÔI",
+		"scene_02 reload restores the visible classroom plea")
+	_check(is_zero_approx(arm.spring_length) and is_equal_approx(pivot.position.y, 1.42)
+		and cinematic_camera != null and cinematic_camera.current,
+		"scene_02 reload keeps the first-person gameplay rig configured during the opening shot")
 	if failures == 0:
 		print("HALLWAY_RESUME_PASS checks=%d" % checks)
 		quit()

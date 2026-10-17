@@ -66,11 +66,13 @@ func legal_moves_from(source: int) -> Array[Dictionary]:
 		var saved_board := board.duplicate()
 		var saved_rights: Dictionary = castling_rights.duplicate()
 		var saved_ep := en_passant_square
+		var saved_halfmove_clock := halfmove_clock
 		_apply_unchecked(move)
 		var leaves_king_safe := not is_in_check(turn)
 		board = saved_board
 		castling_rights = saved_rights
 		en_passant_square = saved_ep
+		halfmove_clock = saved_halfmove_clock
 		if leaves_king_safe:
 			moves.append(move)
 	return moves

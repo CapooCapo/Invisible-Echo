@@ -5,9 +5,9 @@ const LAB_SCENE: PackedScene = preload("res://scenes/visual/computer_lab_3d.tscn
 const CAMERA_ORDER := [0, 1, 2]
 const VALID_PAIRS := [Vector2i(0, 2), Vector2i(1, 3), Vector2i(4, 5)]
 const CONCLUSIONS := [
-	"Bài thi và camera cho thấy An đến trường trong đêm.",
-	"Bản ghi xác nhận có sự cố, nhưng không xác định ai gây ra.",
-	"Bài đăng và tin nhắn không đủ bằng chứng quy kết tác giả.",
+	"Nhật ký và bài cũ xác nhận An từng bị bắt nạt, vu cáo và bôi nhọ.",
+	"Camera cho thấy An bị truy đuổi; biên bản bỏ sót diễn biến, chưa xác định ai gây ra sự cố.",
+	"Bài đăng bêu xấu Minh có dấu vết liên hệ với bài cũ về An; chưa xác định tác giả.",
 ]
 
 enum Beat { COMPUTER, CAMERA, POST, DEDUCTION, DONE }
@@ -173,14 +173,19 @@ func _unhandled_input(event: InputEvent) -> void:
 					camera_clips[camera_held] = temp
 					camera_held = -1
 					camera_solved = camera_clips == CAMERA_ORDER
-					status.text = "Thứ tự khôi phục đúng: hành lang → phòng máy → cầu thang. Bản ghi chỉ cho thấy An rời khung hình." if camera_solved else "Clip đã đổi chỗ; vẫn có thể sửa hoặc nhấn R để bắt đầu lại."
+					if camera_solved:
+						GameState.set_evidence("an_chased_before_accident", true)
+						GameState.set_evidence("incident_report_compared", true)
+						status.text = "Phục hồi CCTV: bóng người truy đuổi An tới cầu thang trước khi cô gặp nạn. Đối chiếu biên bản: báo cáo chỉ ghi cô rời khung hình và bỏ sót diễn biến; chưa xác định ai gây ra."
+					else:
+						status.text = "Clip đã đổi chỗ; vẫn có thể sửa hoặc nhấn R để bắt đầu lại."
 		Beat.POST:
 			if event.keycode == KEY_E and post_step < 3:
 				post_step += 1
 				if post_step == 1:
-					status.text = "Bản nháp ẩn danh đăng sau khi camera mất tín hiệu; tài khoản không để lại tên thật."
+					status.text = "Bản nháp ẩn danh bêu xấu Trần Nhật Minh. Tài khoản và dấu thời gian chưa chứng minh ai viết hay lời buộc tội có thật."
 				elif post_step == 2:
-					status.text = "Tin nhắn Minh xin đừng phát tán lời đồn khi chưa biết chuyện gì đã xảy ra."
+					status.text = "Tin nhắn Minh gửi An mở đầu bằng lời cảm ơn — một dấu vết cho thấy An từng giúp cậu, không phải bằng chứng về tác giả bài đăng."
 				elif post_step == 3:
 					status.text = "Chọn A để đăng nguyên văn, hoặc B để kiểm chứng và cảnh báo Minh."
 			elif (event.keycode == KEY_A or event.keycode == KEY_B) and post_step >= 3 and post_choice.is_empty():
@@ -223,8 +228,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					var pair := Vector2i(mini(held_evidence, selected_evidence), maxi(held_evidence, selected_evidence))
 					held_evidence = -1
 					if pair in VALID_PAIRS:
-						if not linked_pairs.has(pair): linked_pairs.append(pair)
-						status.text = CONCLUSIONS[linked_pairs.size() - 1]
+						if not linked_pairs.has(pair):
+							linked_pairs.append(pair)
+							_match_evidence_pair(pair)
+						status.text = CONCLUSIONS[VALID_PAIRS.find(pair)]
 					else:
 						status.text = "Liên kết này chưa được chứng cứ hỗ trợ. Thử ghép cặp khác; kết luận phải giữ nguyên điều chưa biết."
 					if linked_pairs.size() == 3:
@@ -365,16 +372,16 @@ func _draw_posts() -> void:
 	draw_rect(Rect2(500, 132, 336, 232), Color("#2a3133"))
 	draw_string(ThemeDB.fallback_font, Vector2(150, 170), "BÀI ĐĂNG ẨN DANH", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#e2c996"))
 	draw_string(ThemeDB.fallback_font, Vector2(526, 170), "TIN NHẮN MINH", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#a9c1ba"))
-	var post_lines := ["Có chuyện đã xảy ra tối qua.", "Không có tên tài khoản thật.", "Thời điểm đăng: sau khi camera tắt."]
-	var minh_lines := ["Đừng vội chia sẻ bài viết.", "Mình chưa biết ai đã ở đó.", "Xin hãy giúp mình tìm sự thật."]
-	var line_index: int = clampi(post_step, 0, 2)
+	var post_lines := ["Bài ẩn danh bêu xấu Trần Nhật Minh.", "Tài khoản không hiện tên thật.", "Bài đăng xuất hiện sau khi camera ngắt tín hiệu."]
+	var minh_lines := ["“Cảm ơn cậu đã giúp tớ.” — Minh gửi An.", "Minh xin đừng để lời đồn lan rộng.", "Tin nhắn không xác nhận ai viết bài."]
+	var line_index: int = clampi(post_step - 1, 0, 2)
 	draw_string(ThemeDB.fallback_font, Vector2(150, 222), post_lines[line_index], HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color("#d4d0c6"))
 	draw_string(ThemeDB.fallback_font, Vector2(526, 222), minh_lines[line_index], HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color("#d4d0c6"))
 	if not post_choice.is_empty():
 		draw_string(ThemeDB.fallback_font, Vector2(360, 398), "LỰA CHỌN: " + post_choice, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, Color("#e0bf83"))
 
 func _draw_deduction() -> void:
-	var labels := ["Bài thi 100", "Ngày 18/04", "Camera", "Biên bản", "Bài ẩn danh", "Tin Minh"]
+	var labels := ["Nhật ký An", "Camera truy đuổi", "Bài cũ về An", "Biên bản", "Bài đăng Minh", "Dấu vết tài khoản"]
 	for index in range(6):
 		var col := index % 3
 		var row := index / 3
@@ -387,6 +394,17 @@ func _draw_deduction() -> void:
 		var origin := Vector2(247 + (pair.x % 3) * 234, 190 + (pair.x / 3) * 102)
 		var destination := Vector2(247 + (pair.y % 3) * 234, 190 + (pair.y / 3) * 102)
 		draw_line(origin, destination, Color("#b2c79f"), 3)
+
+func _match_evidence_pair(pair: Vector2i) -> void:
+	match pair:
+		Vector2i(0, 2):
+			GameState.set_evidence("an_bullied_and_defamed", true)
+		Vector2i(1, 3):
+			GameState.set_evidence("incident_report_omissions", true)
+			GameState.set_evidence("incident_culprit_unknown", true)
+		Vector2i(4, 5):
+			GameState.set_evidence("minh_post_trace_links_old_an_post", true)
+			GameState.set_evidence("minh_post_authorship_unknown", true)
 
 func _draw_done() -> void:
 	draw_rect(Rect2(195, 122, 570, 280), Color("#1b2626"))

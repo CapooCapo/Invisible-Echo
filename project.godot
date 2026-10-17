@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="An Tiếng Gáy Trong Đêm"
-run/main_scene="res://scenes/01_hanh_lang.tscn"
+run/main_scene="res://scenes/title_menu.tscn"
 config/features=PackedStringArray("4.7")
 
 [autoload]
